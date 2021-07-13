@@ -24,7 +24,22 @@ logger = logging.getLogger(__name__)
 SERVICE_CHOICE, LOCATION_CHOICE = range(2)
 
 
-def start(update: Update, context: CallbackContext) -> int:
+def start(update, context: CallbackContext) -> None:
+    update.message.reply_text('Welcome to use this bot for NJ MVC appointment check. \n\n' +
+                              '/check Check the most recent available places for appointment.\n' +
+                              '/subscribe Receive a notification when a more recent time slot is available. '
+                              'Authorized users only.\n' +
+                              '/help Show the help message.')
+
+
+def help(update: Update, context: CallbackContext) -> None:
+    update.message.reply_text('/check Check the most recent available places for appointment.\n' +
+                              '/subscribe Receive a notification when a more recent time slot is available. '
+                              'Authorized users only.\n' +
+                              '/help Show the help message.')
+
+
+def check(update: Update, context: CallbackContext) -> int:
     reply_keyboard = [['INITIAL PERMIT (NOT FOR KNOWLEDGE TEST)', 'KNOWLEDGE TESTING', 'REAL ID'],
                       ['CDL PERMIT OR ENDORSEMENT - (NOT FOR KNOWLEDGE TEST)', 'NON-DRIVER ID'],
                       ['RENEWAL: LICENSE OR NON-DRIVER ID', 'RENEWAL: CDL', 'TRANSFER FROM OUT OF STATE'],
@@ -32,7 +47,6 @@ def start(update: Update, context: CallbackContext) -> int:
                       ['REGISTRATION RENEWAL', 'TITLE DUPLICATE/REPLACEMENT']]
 
     update.message.reply_text(
-        'Welcome to use this bot for NJ MVC appointment check. \n\n'
         'Send /cancel to stop at any time.\n\n'
         'What service do you want to make an appointment?\n',
         reply_markup=ReplyKeyboardMarkup(
@@ -46,15 +60,24 @@ def service_time_check(update: Update, context: CallbackContext) -> int:
     user = update.message.from_user
     logger.info("User %s chooses %s", user.first_name, update.message.text)
     service_time_url = URL + service_code[update.message.text]
-    response = requests.get(service_time_url)
-    sorted_time_list = parse_response(response)
     update.message.reply_text('You are querying the available locations for ' + update.message.text + '.\n' +
-                              'You can visit ' + service_time_url + ' directly for all available locations.')
-    update.message.reply_text(gen_avail_places(sorted_time_list, service_time_url))
-    update.message.reply_text(
-        'Thank you for using. Bye!', reply_markup=ReplyKeyboardRemove()
-    )
-    return ConversationHandler.END
+                              'You can visit ' + service_time_url + ' directly for all available locations.\n' +
+                              'It may take some time to get the results because NJ MVC website is unstable.')
+    try:
+        response = requests.get(service_time_url)
+    except Exception:
+        logger.error('Fail to connect to NJ MVC website.')
+        update.message.reply_text(
+            'Error: cannot connect to the NJ MVC website. Please try again later.', reply_markup=ReplyKeyboardRemove()
+        )
+        return ConversationHandler.END
+    else:
+        sorted_time_list = parse_response(response)
+        update.message.reply_text(gen_avail_places(sorted_time_list, service_time_url))
+        update.message.reply_text(
+            'Thank you for using. Bye!', reply_markup=ReplyKeyboardRemove()
+        )
+        return ConversationHandler.END
 
 
 def parse_response(response):
@@ -86,7 +109,8 @@ def gen_avail_places(sorted_list, service_time_url):
 
     reply = 'The most recent {:d} places you can visit: (date in yyyy-mm-dd, time in 24H)\n\n'.format(len(sorted_list))
     for item in sorted_list:
-        reply = reply + 'Location: ' + location_id[str(item['LocationId'])] + '\n' + 'Time: ' + str(item['FirstOpenSlot']) + '\n' \
+        reply = reply + 'Location: ' + location_id[str(item['LocationId'])] + '\n' \
+                + 'Time: ' + str(item['FirstOpenSlot']) + '\n' \
                 + 'Link: ' + service_time_url + '/' + str(item['LocationId']) + '\n\n'
     return reply
 
@@ -101,11 +125,13 @@ def cancel(update: Update, context: CallbackContext) -> int:
     return ConversationHandler.END
 
 
-def echo(update, context):
-    context.bot.send_message(chat_id=update.effective_chat.id, text='Echo is on for testing: ' + update.message.text)
+def usr_msg(update: Update, context: CallbackContext) -> None:
+    user = update.message.from_user
+    logger.info("User %s said: %s", user.first_name, update.message.text)
+    update.message.reply_text('blah blah blah')
 
 
-def unknown(update, context):
+def unknown(update: Update, context: CallbackContext) -> None:
     context.bot.send_message(chat_id=update.effective_chat.id, text="Sorry, the command does not support.")
 
 
@@ -121,7 +147,7 @@ def main() -> None:
     dispatcher = updater.dispatcher
 
     conv_handler = ConversationHandler(
-        entry_points=[CommandHandler('start', start)],
+        entry_points=[CommandHandler('check', check)],
         states={
             SERVICE_CHOICE: [MessageHandler(Filters.regex(service_choice_regex()), service_time_check)]
         },
@@ -129,8 +155,14 @@ def main() -> None:
     )
     dispatcher.add_handler(conv_handler)
 
-    echo_handler = MessageHandler(Filters.text & (~Filters.command), echo)
-    dispatcher.add_handler(echo_handler)
+    start_handler = CommandHandler('start', start)
+    dispatcher.add_handler(start_handler)
+
+    help_handler = CommandHandler('help', help)
+    dispatcher.add_handler(help_handler)
+
+    usr_msg_handler = MessageHandler(Filters.text & (~Filters.command), usr_msg)
+    dispatcher.add_handler(usr_msg_handler)
 
     unknown_handler = MessageHandler(Filters.command, unknown)
     dispatcher.add_handler(unknown_handler)
