@@ -10,8 +10,8 @@ from const import *
 
 def main():
     loc_dict = {}
-    for code in service_code.values():
-        service_time_url = URL + code
+    for code in SERVICE_ID.values():
+        service_time_url = MVC_URL + code
         response = requests.get(service_time_url)
         dom = etree.HTML(response.text)
         js_content = str(dom.xpath('/html/body/script[22]/text()')[0])

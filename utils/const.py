@@ -1,11 +1,15 @@
-from utils.secret import load_secret
+from utils.secret import *
 
 # token of the bot
 TOKEN = load_secret('token')
 
-URL = 'https://telegov.njportal.com/njmvc/AppointmentWizard/'
+AUTHORIZED_USERS = load_secrets('authorized_users')
 
-service_code = {
+MVC_URL = 'https://telegov.njportal.com/njmvc/AppointmentWizard/'
+PRJ_URL = 'https://github.com/tangbao/NJ-MVC-Appointment-Helper/'
+LOCATION_ID_URL = 'https://github.com/tangbao/NJ-MVC-Appointment-Helper/blob/master/location_list.md'
+
+SERVICE_ID = {
     'INITIAL PERMIT (NOT FOR KNOWLEDGE TEST)': '15',
     'CDL PERMIT OR ENDORSEMENT - (NOT FOR KNOWLEDGE TEST)': '14',
     'REAL ID': '12',
@@ -20,7 +24,13 @@ service_code = {
     'TITLE DUPLICATE/REPLACEMENT': '13'
 }
 
-location_id = {'186': 'Bakers Basin', '187': 'Bayonne', '189': 'Camden', '208': 'Cardiff', '191': 'Delanco',
+SERVICE_KEYBOARD = [['INITIAL PERMIT (NOT FOR KNOWLEDGE TEST)', 'KNOWLEDGE TESTING', 'REAL ID'],
+                    ['CDL PERMIT OR ENDORSEMENT - (NOT FOR KNOWLEDGE TEST)', 'NON-DRIVER ID'],
+                    ['RENEWAL: LICENSE OR NON-DRIVER ID', 'RENEWAL: CDL', 'TRANSFER FROM OUT OF STATE'],
+                    ['NEW TITLE OR REGISTRATION', 'SENIOR NEW TITLE OR REGISTRATION (65+)'],
+                    ['REGISTRATION RENEWAL', 'TITLE DUPLICATE/REPLACEMENT']]
+
+LOCATION_ID = {'186': 'Bakers Basin', '187': 'Bayonne', '189': 'Camden', '208': 'Cardiff', '191': 'Delanco',
                '192': 'Eatontown', '194': 'Edison', '195': 'Flemington', '197': 'Freehold', '198': 'Lodi',
                '200': 'Newark', '201': 'North Bergen', '203': 'Oakland', '204': 'Paterson', '206': 'Rahway',
                '207': 'Randolph', '188': 'Rio Grande', '190': 'Salem', '193': 'South Plainfield', '196': 'Toms River',
@@ -67,4 +77,4 @@ location_id = {'186': 'Bakers Basin', '187': 'Bayonne', '189': 'Camden', '208': 
                '147': 'Cherry Hill', '148': 'East Orange', '149': 'Hazlet', '150': 'Jersey City', '151': 'Lakewood',
                '152': 'Manahawkin', '153': 'Medford', '154': 'Newton', '255': 'Rio Grande', '155': 'Runnemede',
                '156': 'Somerville', '157': 'South Brunswick', '158': 'Springfield', '159': 'Trenton Regional',
-               '160': 'Turnersville', '161': 'Wallington', '162': 'Washington'}
+               '160': 'Turnersville', '161': 'Wallington', '162': 'Washington', '0': 'All'}
