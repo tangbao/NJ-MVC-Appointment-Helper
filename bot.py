@@ -7,8 +7,6 @@ from telegram import (
     ReplyKeyboardMarkup,
     ReplyKeyboardRemove,
     Update,
-    InlineQueryResultArticle,
-    InputTextMessageContent
 )
 from telegram.ext import (
     Updater,
@@ -17,7 +15,6 @@ from telegram.ext import (
     Filters,
     ConversationHandler,
     CallbackContext,
-    InlineQueryHandler
 )
 
 from utils.const import *
@@ -28,7 +25,7 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 logger = logging.getLogger(__name__)
 
 SERVICE_TIME = 0
-LOCATION_SELECT, TIME_SELECT, JOB_REG = range(3)
+LOCATION_SELECT, TIME_SELECT, CONFIRM_INFO, JOB_REG = range(4)
 
 
 def start(update, context: CallbackContext) -> None:
@@ -99,7 +96,7 @@ def parse_response(response):
         time = item['FirstOpenSlot'][-19:]
         if time == "ointments Available":
             continue
-        time_fmt = datetime.datetime.strptime(time, '%m/%d/%Y %I:%M %p')
+        time_fmt = datetime.strptime(time, '%m/%d/%Y %I:%M %p')
         time_data_list.append({
             'LocationId': item['LocationId'],
             'FirstOpenSlot': time_fmt
@@ -175,10 +172,15 @@ def location_select(update: Update, context: CallbackContext) -> int:
     context.user_data['SERVICE'] = update.message.text
     update.message.reply_text('Good. You subscribe to ' + update.message.text + '.\n\n'
                               'Please tell me the preferred MVC location you want to subscribe. '
-                              'Please check ' + PRJ_URL + 'location_list.md for location names and ids.\n\n'
-                                                          'Either location id or location name is supported.\n\n'
-                                                          'If you have no preferred MVC location and want to '
-                                                          'subscribe to all locations, please reply 0 or All.')
+                              'Please check ' + LOCATION_ID_URL + ' for location names and ids.\n\n'
+                                                                  'Either location id or location name is '
+                                                                  'supported.\n\n '
+                                                                  'If you have no preferred MVC location and want '
+                                                                  'to subscribe to all locations, '
+                                                                  'please reply 0 or All.',
+                              reply_markup=ReplyKeyboardMarkup(
+                                  [['All']], one_time_keyboard=True, input_field_placeholder='Locations'
+                              ))
 
     return TIME_SELECT
 
@@ -195,7 +197,10 @@ def time_select(update: Update, context: CallbackContext) -> int:
                                                                       'supported.\n\n '
                                                                       'If you have no preferred MVC location and want '
                                                                       'to subscribe to all locations, '
-                                                                      'please reply 0 or All.')
+                                                                      'please reply 0 or All.',
+                                  reply_markup=ReplyKeyboardMarkup(
+                                      [['All']], one_time_keyboard=True, input_field_placeholder='Locations'
+                                  ))
         return TIME_SELECT
 
     if location in LOCATION_ID.keys():
@@ -205,12 +210,18 @@ def time_select(update: Update, context: CallbackContext) -> int:
 
     update.message.reply_text('Please tell me the last date you can accept to do the business in MVC.\n\n'
                               'The format is yymmdd (US Eastern Time), e.g., 210704 means July 4th, 2021.\n\n'
-                              'If you have no requirements on this, please reply 0.')
+                              'If you have no requirements on this, please reply 0 or All.',
+                              reply_markup=ReplyKeyboardMarkup(
+                                  [['All']], one_time_keyboard=True, input_field_placeholder='Time'
+                              ))
 
-    return JOB_REG
+    return CONFIRM_INFO
 
 
 def verify_valid_date(date_str):
+    if date_str == '0' or date_str == 'All':
+        return True
+
     try:
         dt = datetime.strptime(date_str, '%y%m%d')
     except ValueError:
@@ -224,7 +235,7 @@ def verify_valid_date(date_str):
         return True
 
 
-def subscribe_job_reg(update: Update, context: CallbackContext) -> int:
+def confirm_info(update: Update, context: CallbackContext) -> int:
     user = update.message.from_user
     time = update.message.text
     logger.info("User %s chooses %s", user.first_name, time)
@@ -232,14 +243,35 @@ def subscribe_job_reg(update: Update, context: CallbackContext) -> int:
     if not verify_valid_date(time):
         update.message.reply_text('Error: Wrong time format.\n\n'
                                   'The format is yymmdd (US Eastern Time), e.g., 210707 means July 7th, 2021.\n\n'
-                                  'If you have no requirements on this, please reply 0.')
-        return JOB_REG
+                                  'If you have no requirements on this, please reply 0 or All.',
+                                  reply_markup=ReplyKeyboardMarkup(
+                                      [['All']], one_time_keyboard=True, input_field_placeholder='Time'
+                                  ))
+        return CONFIRM_INFO
     else:
+        if time == '0' or time == 'All':
+            time = '20331231'
         context.user_data['TIME'] = time
         update.message.reply_text('You are subscribing to ' + context.user_data.get('SERVICE', 'NOT FOUND') +
                                   ' at ' + LOCATION_ID[context.user_data.get('LOCATION_ID', '0')] +
-                                  ' on or before ' + context.user_data.get('TIME', 'NOT FOUND') + ' (yymmdd).')
-        return ConversationHandler.END
+                                  ' on or before ' + context.user_data.get('TIME', '20331231') + ' (yymmdd).\n\n'
+                                  'Reply /confirm to start the subscription. The bot will query available '
+                                  'appointments every 5 min, and send you a notification when one is available.\n\n'
+                                  'Reply /cancel to start a new subscribe if there\'s anything wrong.',
+                                  reply_markup=ReplyKeyboardMarkup(
+                                      [['/confirm', '/cancel']], one_time_keyboard=True, input_field_placeholder='y/n'
+                                  ))
+        return JOB_REG
+
+
+def appt_check(context: CallbackContext):
+    print('checking')
+
+
+def job_reg(update: Update, context: CallbackContext) -> int:
+    update.message.reply_text('Success!')
+    context.job_queue.run_repeating(appt_check, interval=300, first=10)
+    return ConversationHandler.END
 
 
 def main() -> None:
@@ -259,7 +291,8 @@ def main() -> None:
         states={
             LOCATION_SELECT: [MessageHandler(Filters.text & (~Filters.command), location_select)],
             TIME_SELECT: [MessageHandler(Filters.text & (~Filters.command), time_select)],
-            JOB_REG: [MessageHandler(Filters.text & (~Filters.command), subscribe_job_reg)]
+            CONFIRM_INFO: [MessageHandler(Filters.text & (~Filters.command), confirm_info)],
+            JOB_REG: [CommandHandler('confirm', job_reg)]
         },
         fallbacks=[CommandHandler('cancel', cancel)]
     )
