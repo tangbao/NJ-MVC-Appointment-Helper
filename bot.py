@@ -26,6 +26,7 @@ logger = logging.getLogger(__name__)
 
 SERVICE_TIME = 0
 LOCATION_SELECT, TIME_SELECT, CONFIRM_INFO, JOB_REG = range(4)
+CANCEL_JOB = 0
 
 
 def start(update, context: CallbackContext) -> None:
@@ -90,7 +91,7 @@ def cancel(update: Update, context: CallbackContext) -> int:
 def usr_msg(update: Update, context: CallbackContext) -> None:
     user = update.message.from_user
     logger.info("User %s said: %s", user.first_name, update.message.text)
-    update.message.reply_text('blah blah blah')
+    update.message.reply_text('Blah blah blah. I don\'t understand what you\'re talking about.')
 
 
 def unknown(update: Update, context: CallbackContext) -> None:
@@ -104,6 +105,10 @@ def auth_check_subscribe(update: Update, context: CallbackContext) -> int:
         update.message.reply_text(NO_AUTH_MSG)
         return ConversationHandler.END
     else:
+        if len(context.job_queue.jobs()) >= JOB_LIMIT:
+            update.message.reply_text('Sorry, you have too many subscriptions. Please use /mysub to cancel some first.')
+            return ConversationHandler.END
+
         update.message.reply_text(
             CHECK_MSG,
             reply_markup=ReplyKeyboardMarkup(
@@ -172,7 +177,7 @@ def confirm_info(update: Update, context: CallbackContext) -> int:
                                   ))
         return CONFIRM_INFO
     else:
-        if time == '0' or time == 'All':
+        if time == 'All':
             time = '331231'
         context.user_data['TIME'] = time
         update.message.reply_text('You are subscribing to ' + context.user_data.get('SERVICE', 'NOT FOUND') +
@@ -201,6 +206,7 @@ def appt_check(context: CallbackContext):
     except:
         logger.error('Fail to connect to NJ MVC website.')
     else:
+        # todo: need to modify when subscribe to only one place
         result = parse_response(response, 1)
         if len(result) == 1:
             context.bot.send_message(chat_id=detail['CHAT_ID'],
@@ -239,19 +245,42 @@ def auth_check_sublist(update: Update, context: CallbackContext) -> int:
             update.message.reply_text('You have no running subscriptions.')
             return ConversationHandler.END
         else:
-            update.message.reply_text('Here are the running subscriptions you have. Reply the index to cancel it.'
-                                      'Reply 0 to cancel all. \n\n Send /cancel to quit this procedure.')
+            update.message.reply_text('Here are the running subscriptions you have.')
             for i in range(len(jobs)):
                 update.message.reply_text(str(i+1) + ': ' + jobs[i].name)
-            return 1
+            update.message.reply_text(SET_JOB_MSG,
+                                      reply_markup=ReplyKeyboardMarkup(
+                                        gen_job_list_keyboard(len(jobs)),
+                                        one_time_keyboard=True, input_field_placeholder='mysubs'
+                                      ))
+            return CANCEL_JOB
 
 
-def cancel_all_job(update: Update, context: CallbackContext) -> None:
+def cancel_job(update: Update, context: CallbackContext) -> int:
+    user = update.message.from_user
+    job_idx = update.message.text
+    logger.info("User %s starts to cancel job %s.", user.first_name, job_idx)
     jobs = context.job_queue.jobs()
-    for job in jobs:
-        job.schedule_removal()
-        print(job.name + ' removed')
-    update.message.reply_text('All subscriptions canceled!', reply_markup=ReplyKeyboardRemove())
+    jobs_str_list = [str(x+1) for x in list(range(len(jobs)))]
+
+    if job_idx not in jobs_str_list:
+        update.message.reply_text('Invalid subscription index.\n\n'+SET_JOB_MSG,
+                                  reply_markup=ReplyKeyboardMarkup(
+                                      gen_job_list_keyboard(len(jobs)),
+                                      one_time_keyboard=True, input_field_placeholder='mysubs'
+                                  ))
+        return CANCEL_JOB
+
+    if job_idx == '0':
+        for job in jobs:
+            job.schedule_removal()
+            logger.info(job.name + ' removed')
+        update.message.reply_text('All subscriptions canceled!', reply_markup=ReplyKeyboardRemove())
+    else:
+        job = jobs[int(job_idx)-1]
+        logger.info(job.name + ' removed')
+        update.message.reply_text(job.name + ' canceled!', reply_markup=ReplyKeyboardRemove())
+    return ConversationHandler.END
 
 
 def main() -> None:
@@ -280,8 +309,9 @@ def main() -> None:
     sublist_conv_handler = ConversationHandler(
         entry_points=[CommandHandler('mysub', auth_check_sublist)],
         states={
-
+            CANCEL_JOB: [MessageHandler(Filters.text & (~Filters.command), cancel_job)]
         },
+        fallbacks=[CommandHandler('cancel', cancel)]
     )
 
     dispatcher.add_handler(check_conv_handler)

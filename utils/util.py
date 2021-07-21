@@ -84,3 +84,10 @@ def gen_avail_places(sorted_list, service_time_url):
                 + 'Time: ' + str(item['FirstOpenSlot']) + '\n' \
                 + 'Link: ' + service_time_url + '/' + str(item['LocationId']) + '\n\n'
     return reply
+
+
+def gen_job_list_keyboard(job_len):
+    job_list_keyboard = [[], ['0']]
+    for i in range(job_len):
+        job_list_keyboard[0].append(str(i + 1))
+    return job_list_keyboard

@@ -19,6 +19,9 @@ NO_AUTH_MSG = 'Sorry, you are not the authorized user, you cannot use this funct
               'Instead, you can deploy this bot by yourself.\n\n' + \
               'Please visit ' + PRJ_URL + ' for more information.'
 
+SET_JOB_MSG = 'Reply the index of the subscription to cancel it. ' + \
+              'Reply 0 to cancel all. \n\nSend /cancel to quit this procedure.'
+
 HELP_MSG = '/check Check the most recent available places for appointment.\n' + \
            '/subscribe Receive a notification when a more recent time slot is available. Authorized users only.\n' + \
            '/help Show the help message.\n'
