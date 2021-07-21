@@ -278,6 +278,7 @@ def cancel_job(update: Update, context: CallbackContext) -> int:
         update.message.reply_text('All subscriptions canceled!', reply_markup=ReplyKeyboardRemove())
     else:
         job = jobs[int(job_idx)-1]
+        job.schedule_removal()
         logger.info(job.name + ' removed')
         update.message.reply_text(job.name + ' canceled!', reply_markup=ReplyKeyboardRemove())
     return ConversationHandler.END
