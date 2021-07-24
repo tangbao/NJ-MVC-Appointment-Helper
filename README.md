@@ -14,6 +14,17 @@ Stay safe.
 Note that you can only use `/check` function of this demo bot. Only authorized users can use `/subscribe`. I do not make
 it fully public because I cannot afford too much cloud resources.
 
+### **Privacy Disclaimer**
+
+The logger of the bot may record your Telegram first name and all the messages you send to the bot. Your Telegram user 
+id will be used to verify if you are an authorized user or not. All the data collected by the bot will only be used for 
+debug and will not be used for any analytics or shared/sold to a third party.
+
+If you do not agree with this privacy policy, please do not use the bot, and consider 
+[building your own bot](#build-your-own).
+
+Privacy disclaimer updated 2021 Jul 24.
+
 ## Usage
 
 `/check` Check the most recent available places for appointment.
@@ -47,7 +58,7 @@ An example of a running subscription
 
 ![/mysub](/media/mysub.png)
 
-## Run Your Own
+## Build Your Own
 
 > Use at your own risk. There is NO WARRANTY.
 
