@@ -11,6 +11,9 @@ Stay safe.
 
 [@njmvc_bot](https://t.me/njmvc_bot)
 
+Note that you can only use `/check` function of this demo bot. Only authorized users can use `/subscribe`. I do not make
+it fully public because I cannot afford too much cloud resources.
+
 ## Usage
 
 `/check` Check the most recent available places for appointment.
@@ -53,6 +56,9 @@ You can have at most three subscriptions.
 
 ### Configuration & Deployment
 
+> In the current version, the bot is not persistent. It means that everything will lose after you restart the bot. You 
+> have to create the subscriptions again.
+
 - `git clone https://github.com/tangbao/njmvc_appt_helper.git`
 - [Optional but recommended] Create and activate your virtual env, like Anaconda.
 - `pip install -r requirements.txt`
@@ -60,7 +66,8 @@ You can have at most three subscriptions.
     - Create `token.secret`, and put your token inside.
     - Create `authorized_users.secret`, and put the ids of authorized users inside, one per line, if you want only the 
       authorized users can use the subscription function. If you hope everyone can use it, set `REQUIRE_AUTH` in 
-      `config.py` as `False`.
+      `config.py` (located under project root) as `False`.
+- If you want to change the maximum number of subscriptions a user can create, change `JOB_LIMIT` in `config.py`.
 - Run `bot.py` and start using!
 
 ### Resources
@@ -68,7 +75,12 @@ You can have at most three subscriptions.
 The bot is using [python-telegram-bot](https://github.com/python-telegram-bot/python-telegram-bot), please refer to its 
 documentation for more detailed information about docs, deployment, and so on.
 
-### Questions, Bugs, and Contributions
+## Development Plan (NO GUARANTEE)
+- Make the bot persistent - subscription still exists after the bot restarts
+- Update the logger info
+- Automatically submit an appointment (I guess I will never do this)
+
+## Questions, Bugs, and Contributions
 
 You can open an issue or email me (i AT tbis DOT me) directly. PR is welcome.
 
