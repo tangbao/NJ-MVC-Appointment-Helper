@@ -19,6 +19,7 @@ from telegram.ext import (
 from utils.const import *
 from utils.msg import *
 from utils.util import *
+from config import *
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
@@ -101,7 +102,7 @@ def unknown(update: Update, context: CallbackContext) -> None:
 def auth_check_subscribe(update: Update, context: CallbackContext) -> int:
     user = update.message.from_user
     logger.info("User %s starts to subscribe.", user.first_name)
-    if str(user.id) not in AUTHORIZED_USERS:
+    if REQUIRE_AUTH and str(user.id) not in AUTHORIZED_USERS:
         update.message.reply_text(NO_AUTH_MSG)
         return ConversationHandler.END
     else:
@@ -236,7 +237,8 @@ def job_reg(update: Update, context: CallbackContext) -> int:
 def auth_check_sublist(update: Update, context: CallbackContext) -> int:
     user = update.message.from_user
     logger.info("User %s starts to check subscription list.", user.first_name)
-    if str(user.id) not in AUTHORIZED_USERS:
+
+    if REQUIRE_AUTH and str(user.id) not in AUTHORIZED_USERS:
         update.message.reply_text(NO_AUTH_MSG)
         return ConversationHandler.END
     else:

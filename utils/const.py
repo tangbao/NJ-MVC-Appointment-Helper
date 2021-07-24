@@ -5,8 +5,6 @@ TOKEN = load_secret('token')
 
 AUTHORIZED_USERS = load_secrets('authorized_users')
 
-JOB_LIMIT = 3
-
 MVC_URL = 'https://telegov.njportal.com/njmvc/AppointmentWizard/'
 PRJ_URL = 'https://github.com/tangbao/NJ-MVC-Appointment-Helper/'
 LOCATION_LIST_URL = 'https://github.com/tangbao/NJ-MVC-Appointment-Helper/blob/master/location_list.md'
