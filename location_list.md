@@ -9,6 +9,21 @@ I recommend to input id directly.
 > page, which is shown below as an example.
 > ![Where to find service and location](/media/find_service_locaiton.png)
 
+## Catalog
+
+1. [INITIAL PERMIT (NOT FOR KNOWLEDGE TEST)](#initial-permit-not-for-knowledge-test)
+1. [CDL PERMIT OR ENDORSEMENT - (NOT FOR KNOWLEDGE TEST)](#cdl-permit-or-endorsement---not-for-knowledge-test)
+1. [REAL ID](#real-id)
+1. [NON-DRIVER ID](#non-driver-id)
+1. [KNOWLEDGE TESTING](#knowledge-testing)
+1. [RENEWAL: LICENSE OR NON-DRIVER ID](#renewal-license-or-non-driver-id)
+1. [RENEWAL: CDL](##renewal-cdl)
+1. [TRANSFER FROM OUT OF STATE](#transfer-from-out-of-state)
+1. [NEW TITLE OR REGISTRATION](#new-title-or-registration)
+1. [SENIOR NEW TITLE OR REGISTRATION (65+)](#senior-new-title-or-registration-65)
+1. [REGISTRATION RENEWAL](#registration-renewal)
+1. [TITLE DUPLICATE/REPLACEMENT](#title-duplicatereplacement)
+
 ## [INITIAL PERMIT (NOT FOR KNOWLEDGE TEST)](https://telegov.njportal.com/njmvc/AppointmentWizard/15/)
 | Name | Id | Address |
 | :---: | :---: | :---: |

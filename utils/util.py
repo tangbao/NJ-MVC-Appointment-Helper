@@ -49,7 +49,7 @@ def is_expired_date(date_str):
         return False
 
 
-def parse_response(response, list_len):
+def parse_response_all(response, list_len):
     dom = etree.HTML(response.text)
     js_content = str(dom.xpath('/html/body/script[22]/text()')[0])
     time_data = js_content.split('\r\n')[2][23:]
@@ -72,7 +72,23 @@ def parse_response(response, list_len):
         return sorted_list[:list_len]
 
 
-def gen_avail_places(sorted_list, service_time_url):
+def parse_response_one(response, loc_id):
+    dom = etree.HTML(response.text)
+    try:
+        time_raw = str(dom.xpath('/html/body/main/div/div[2]/div/div/div/div[3]/div/div[2]/div/a/@href')[0]).split('/')
+    except IndexError:
+        return []
+    else:
+        time = time_raw[-2] + ' ' + time_raw[-1]
+        time_fmt = datetime.strptime(time, '%Y-%m-%d %H%M')
+        return_time = [{
+                'LocationId': loc_id,
+                'FirstOpenSlot': time_fmt
+            }]
+    return return_time
+
+
+def gen_avail_places(sorted_list, service_time_url, is_from_parse_one):
     if len(sorted_list) == 0:
         return "No places available for the service you are querying. Please check later."
 
@@ -82,12 +98,16 @@ def gen_avail_places(sorted_list, service_time_url):
         reply = reply + 'Location: ' + LOCATION_ID[str(item['LocationId'])] + ' (' \
                 + LOCATION_ID_ADDR[str(item['LocationId'])] + ')\n' \
                 + 'Time: ' + str(item['FirstOpenSlot']) + '\n' \
-                + 'Link: ' + service_time_url + '/' + str(item['LocationId']) + '\n\n'
+                + 'Link: ' + service_time_url + '/'
+        if not is_from_parse_one:
+            reply = reply + str(item['LocationId']) + '\n\n'
+        else:
+            reply = reply + '\n\n'
     return reply
 
 
 def gen_job_list_keyboard(job_len):
-    job_list_keyboard = [[], ['0']]
+    job_list_keyboard = [[], ['0'], ['/cancel']]
     for i in range(job_len):
         job_list_keyboard[0].append(str(i + 1))
     return job_list_keyboard

@@ -73,7 +73,7 @@ def service_time_check(update: Update, context: CallbackContext) -> int:
         )
         return ConversationHandler.END
     else:
-        sorted_time_list = parse_response(response, 3)
+        sorted_time_list = parse_response_all(response, 3)
         update.message.reply_text(gen_avail_places(sorted_time_list, service_time_url))
         update.message.reply_text('Thank you for using. Bye!')
         return ConversationHandler.END
@@ -207,11 +207,15 @@ def appt_check(context: CallbackContext):
     except:
         logger.error('Fail to connect to NJ MVC website.')
     else:
-        # todo: need to modify when subscribe to only one place
-        result = parse_response(response, 1)
+        if detail['LOCATION_ID'] == '0':
+            result = parse_response_all(response, 1)
+            is_from_parse_one = False
+        else:
+            result = parse_response_one(response, detail['LOCATION_ID'])
+            is_from_parse_one = True
         if len(result) == 1:
             context.bot.send_message(chat_id=detail['CHAT_ID'],
-                                     text=gen_avail_places(result, detail['SERVICE_URL']))
+                                     text=gen_avail_places(result, detail['SERVICE_URL'], is_from_parse_one))
         else:
             logger.error('No available place found.')
 
@@ -225,6 +229,8 @@ def job_reg(update: Update, context: CallbackContext) -> int:
     }
 
     job['SERVICE_URL'] = MVC_URL + SERVICE_ID[job['SERVICE']]
+    if job['LOCATION_ID'] != '0':
+        job['SERVICE_URL'] = job['SERVICE_URL'] + '/' + job['LOCATION_ID']
     name = job['TIME'] + ' (date in yymmdd), ' + LOCATION_ID[job['LOCATION_ID']] + ' (location), ' + job['SERVICE']
     job['NAME'] = name
     context.job_queue.run_repeating(appt_check, interval=300, first=10, name=name, context=job)
@@ -263,7 +269,7 @@ def cancel_job(update: Update, context: CallbackContext) -> int:
     job_idx = update.message.text
     logger.info("User %s starts to cancel job %s.", user.first_name, job_idx)
     jobs = context.job_queue.jobs()
-    jobs_str_list = [str(x+1) for x in list(range(len(jobs)))]
+    jobs_str_list = [str(x) for x in list(range(len(jobs)+1))]
 
     if job_idx not in jobs_str_list:
         update.message.reply_text('Invalid subscription index.\n\n'+SET_JOB_MSG,

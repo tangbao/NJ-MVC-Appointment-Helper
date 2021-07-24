@@ -24,21 +24,25 @@ You can have at most three subscriptions.
 
 ## Examples
 
-![/check](/media/check.png)
-
 `/check`
+
+![/check Part 1](/media/check1.png)
+
+![/check Part 2](/media/check2.png)
+
+`/subscribe`
 
 ![/subscription Part 1](/media/sub1.png)
 
 ![/subscription Part 2](/media/sub2.png)
 
-`/subscribe`
+`/mysub`
 
 ![/mysub](/media/mysub.png)
 
-`/mysub`
-
 ## Run Your Own
+
+> Use at your own risk. There is NO WARRANTY.
 
 ### Preparations
 
@@ -63,6 +67,10 @@ You can have at most three subscriptions.
 
 The bot is using [python-telegram-bot](https://github.com/python-telegram-bot/python-telegram-bot), please refer to its 
 documentation for more detailed information about docs, deployment, and so on.
+
+### Questions, Bugs, and Contributions
+
+You can open an issue or email me (i AT tbis DOT me) directly. PR is welcome.
 
 ## License
 
