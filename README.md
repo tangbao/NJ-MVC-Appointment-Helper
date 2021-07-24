@@ -39,6 +39,10 @@ You can have at most three subscriptions.
 
 ![/subscription Part 2](/media/sub2.png)
 
+An example of a running subscription
+
+![/subscription Running](/media/active_sub.png)
+
 `/mysub`
 
 ![/mysub](/media/mysub.png)
@@ -59,7 +63,7 @@ You can have at most three subscriptions.
 > In the current version, the bot is not persistent. It means that everything will lose after you restart the bot. You 
 > have to create the subscriptions again.
 
-- `git clone https://github.com/tangbao/njmvc_appt_helper.git`
+- `git clone https://github.com/tangbao/NJ-MVC-Appointment-Helper.git`
 - [Optional but recommended] Create and activate your virtual env, like Anaconda.
 - `pip install -r requirements.txt`
 - Under `secrets` folder,
