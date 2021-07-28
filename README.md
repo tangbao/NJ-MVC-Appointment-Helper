@@ -16,14 +16,14 @@ it fully public because I cannot afford too much cloud resources.
 
 ### **Privacy Disclaimer**
 
-The logger of the bot may record your Telegram first name and all the messages you send to the bot. Your Telegram user 
+The logger of the bot may record your Telegram username and all the messages you send to the bot. Your Telegram user 
 id will be used to verify if you are an authorized user or not. All the data collected by the bot will only be used for 
 debug and will not be used for any analytics or shared/sold to a third party.
 
 If you do not agree with this privacy policy, please do not use the bot, and consider 
 [building your own bot](#build-your-own).
 
-Privacy disclaimer updated 2021 Jul 24.
+Privacy disclaimer updated 2021 Jul 28.
 
 ## Usage
 

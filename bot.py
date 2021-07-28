@@ -42,7 +42,7 @@ def help(update: Update, context: CallbackContext) -> None:
 
 def global_cancel(update: Update, context: CallbackContext) -> None:
     user = update.message.from_user
-    logger.info("User %s chooses global cancel", user.first_name)
+    logger.info("User %s chooses global cancel", user.full_name)
     context.user_data.clear()
     update.message.reply_text(
         'There is no on-going conversation session to be canceled.', reply_markup=ReplyKeyboardRemove()
@@ -51,7 +51,7 @@ def global_cancel(update: Update, context: CallbackContext) -> None:
 
 def check(update: Update, context: CallbackContext) -> int:
     user = update.message.from_user
-    logger.info("User %s starts to check time.", user.first_name)
+    logger.info("User %s starts to check time.", user.full_name)
     update.message.reply_text(TEST_NEED_MSG)
 
     update.message.reply_text(
@@ -65,7 +65,7 @@ def check(update: Update, context: CallbackContext) -> int:
 
 def service_time_check(update: Update, context: CallbackContext) -> int:
     user = update.message.from_user
-    logger.info("User %s chooses %s", user.first_name, update.message.text)
+    logger.info("User %s chooses %s", user.full_name, update.message.text)
 
     if update.message.text not in SERVICE_ID.keys():
         update.message.reply_text('Sorry, service not found. Please try again.')
@@ -93,7 +93,7 @@ def service_time_check(update: Update, context: CallbackContext) -> int:
 
 def cancel(update: Update, context: CallbackContext) -> int:
     user = update.message.from_user
-    logger.info("User %s canceled the service.", user.first_name)
+    logger.info("User %s canceled the service.", user.full_name)
     context.user_data.clear()
     update.message.reply_text(
         'Session ends. Bye!', reply_markup=ReplyKeyboardRemove()
@@ -103,7 +103,7 @@ def cancel(update: Update, context: CallbackContext) -> int:
 
 def usr_msg(update: Update, context: CallbackContext) -> None:
     user = update.message.from_user
-    logger.info("User %s said: %s", user.first_name, update.message.text)
+    logger.info("User %s said: %s", user.full_name, update.message.text)
     update.message.reply_text('Blah blah blah. I don\'t understand what you\'re talking about.')
 
 
@@ -113,7 +113,7 @@ def unknown(update: Update, context: CallbackContext) -> None:
 
 def auth_check_subscribe(update: Update, context: CallbackContext) -> int:
     user = update.message.from_user
-    logger.info("User %s starts to subscribe.", user.first_name)
+    logger.info("User %s starts to subscribe.", user.full_name)
     if REQUIRE_AUTH and str(user.id) not in AUTHORIZED_USERS:
         update.message.reply_text(NO_AUTH_MSG)
         update.message.reply_text(TEST_NEED_MSG)
@@ -134,7 +134,7 @@ def auth_check_subscribe(update: Update, context: CallbackContext) -> int:
 
 def location_select(update: Update, context: CallbackContext) -> int:
     user = update.message.from_user
-    logger.info("User %s chooses %s", user.first_name, update.message.text)
+    logger.info("User %s chooses %s", user.full_name, update.message.text)
 
     if update.message.text not in SERVICE_ID.keys():
         update.message.reply_text('Sorry, service not found. Please try again.')
@@ -152,7 +152,7 @@ def location_select(update: Update, context: CallbackContext) -> int:
 def time_select(update: Update, context: CallbackContext) -> int:
     user = update.message.from_user
     location = update.message.text
-    logger.info("User %s chooses %s", user.first_name, location)
+    logger.info("User %s chooses %s", user.full_name, location)
 
     service_id = SERVICE_ID[context.user_data.get('SERVICE')]
     if location not in LOCATION_NAME[service_id].keys() and \
@@ -182,7 +182,7 @@ def time_select(update: Update, context: CallbackContext) -> int:
 def confirm_info(update: Update, context: CallbackContext) -> int:
     user = update.message.from_user
     time = update.message.text
-    logger.info("User %s chooses %s", user.first_name, time)
+    logger.info("User %s chooses %s", user.full_name, time)
 
     if not is_valid_date(time):
         update.message.reply_text('Error: Wrong time format.\n\n' + TME_FMT_MSG,
@@ -255,7 +255,7 @@ def job_reg(update: Update, context: CallbackContext) -> int:
 
 def auth_check_sublist(update: Update, context: CallbackContext) -> int:
     user = update.message.from_user
-    logger.info("User %s starts to check subscription list.", user.first_name)
+    logger.info("User %s starts to check subscription list.", user.full_name)
 
     if REQUIRE_AUTH and str(user.id) not in AUTHORIZED_USERS:
         update.message.reply_text(NO_AUTH_MSG)
@@ -280,7 +280,7 @@ def auth_check_sublist(update: Update, context: CallbackContext) -> int:
 def cancel_job(update: Update, context: CallbackContext) -> int:
     user = update.message.from_user
     job_idx = update.message.text
-    logger.info("User %s starts to cancel job %s.", user.first_name, job_idx)
+    logger.info("User %s starts to cancel job %s.", user.full_name, job_idx)
     jobs = context.job_queue.jobs()
     jobs_str_list = [str(x) for x in list(range(len(jobs)+1))]
 
