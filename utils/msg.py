@@ -30,3 +30,7 @@ HELP_MSG = '/check Check the most recent available places for appointment.\n' + 
 
 IN_DEMO_MSG = 'You are in DEMO mode. You cannot really use the /subscribe and /mysub command. The returns of these ' \
               'two commands are just for DEMO.'
+
+TEST_NEED_MSG = 'I am trying to look for some volunteers that can help me test /subscribe function. As a return,' \
+                ' you can be one of the authorized users of this bot to subscribe to appointments. ' \
+                'If you are interested, please contact me at Telegram @kirov_dev. '

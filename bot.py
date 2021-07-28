@@ -32,10 +32,12 @@ CANCEL_JOB = 0
 
 def start(update, context: CallbackContext) -> None:
     update.message.reply_text('Welcome to use this bot for NJ MVC appointment check. \n\n' + HELP_MSG)
+    update.message.reply_text(TEST_NEED_MSG)
 
 
 def help(update: Update, context: CallbackContext) -> None:
     update.message.reply_text(HELP_MSG)
+    update.message.reply_text(TEST_NEED_MSG)
 
 
 def global_cancel(update: Update, context: CallbackContext) -> None:
@@ -50,6 +52,7 @@ def global_cancel(update: Update, context: CallbackContext) -> None:
 def check(update: Update, context: CallbackContext) -> int:
     user = update.message.from_user
     logger.info("User %s starts to check time.", user.first_name)
+    update.message.reply_text(TEST_NEED_MSG)
 
     update.message.reply_text(
         CHECK_MSG,
@@ -113,6 +116,7 @@ def auth_check_subscribe(update: Update, context: CallbackContext) -> int:
     logger.info("User %s starts to subscribe.", user.first_name)
     if REQUIRE_AUTH and str(user.id) not in AUTHORIZED_USERS:
         update.message.reply_text(NO_AUTH_MSG)
+        update.message.reply_text(TEST_NEED_MSG)
         return ConversationHandler.END
     else:
         if len(context.job_queue.jobs()) >= JOB_LIMIT:
