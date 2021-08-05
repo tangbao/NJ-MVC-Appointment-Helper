@@ -2,6 +2,11 @@
 
 An UNOFFICIAL Telegram bot that helps you find the most recent available appointment place for you.
 
+If it could help you, please give me a star. Appreciated.
+
+For now, I am working on the persistence of the bot - make everything, including the job queue of the bot persistent 
+after restarting the bot. So please remember to go back and check for updates.
+
 I really hope this COVID-19 pandemic can end soon so that everything can go back to normal. Hope this bot can help you 
 a little.
 
