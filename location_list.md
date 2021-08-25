@@ -1,8 +1,10 @@
 # Location List
 
-The bot is case-sensitive, which means `North Plainfield` is accepted but `north Plainfield` is not.
+**Please note that the same location may have different id number for different services.**
+**For example, the id of Lodi is 198 in INITIAL PERMIT, but 136 for REAL ID.**
 
-I recommend to input id directly.
+I recommend to input id to the bot directly. If you want to use the location name, please note that 
+the bot is case-sensitive, which means `North Plainfield` is accepted but `north Plainfield` is not.
 
 > For convenience, you can click the links below to visit the corresponding appointment page directly.
 > You can find the location (marked as yellow) and service (marked as purple) you're gonna make appointments on the 

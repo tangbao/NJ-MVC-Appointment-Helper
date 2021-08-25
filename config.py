@@ -1,8 +1,17 @@
+from utils.secret import *
 
-# If true, REQUIRE_AUTH will be ignored. DEMO mode has not been implemented yet.
-DEMO_MODE = False
+# if test mode, the bot will be switched to a test bot
+TEST_MODE = True
 
-REQUIRE_AUTH = True
+TOKEN = load_token(TEST_MODE)
+
+# the error will be sent to admin
+ADMIN = load_secret('admin')
 
 # the maximum number of subscriptions for a user
 JOB_LIMIT = 3
+
+# if true, only authorized users can use /subscribe and /mysub
+REQUIRE_AUTH = True
+
+AUTHORIZED_USERS = load_secrets('authorized_users')

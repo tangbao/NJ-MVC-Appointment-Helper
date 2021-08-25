@@ -4,13 +4,19 @@ An UNOFFICIAL Telegram bot that helps you find the most recent available appoint
 
 If it could help you, please give me a star. Appreciated.
 
-For now, I am working on the persistence of the bot - make everything, including the job queue of the bot persistent 
-after restarting the bot. So please remember to go back and check for updates.
-
 I really hope this COVID-19 pandemic can end soon so that everything can go back to normal. Hope this bot can help you 
 a little.
 
 Stay safe.
+
+## Bot Updates
+
+For now, I am working on the persistence of the bot - make everything, including the job queue of the bot persistent 
+after restarting the bot. So please remember to go back and check for updates.
+
+### 2021 Aug 25
+
+Add `admin` role. Admin can use `/updateauth` cmd to update the authorized users list without restarting the bot.
 
 ## Demo
 
@@ -18,6 +24,10 @@ Stay safe.
 
 Note that you can only use `/check` function of this demo bot. Only authorized users can use `/subscribe`. I do not make
 it fully public because I cannot afford too much cloud resources.
+
+[@njmvc_bot_notif](https://t.me/njmvc_bot_notif)
+
+Receive the updates of this bot and this project.
 
 ### **Privacy Disclaimer**
 
@@ -40,6 +50,8 @@ You can have at most three subscriptions.
 `/mysub` Manage your subscriptions.
 
 `/help` Show the help message.
+
+`/updateauth` Update the authorized user list so that you do not need to restart the bot. Admin user only.
 
 ## Examples
 
@@ -83,7 +95,11 @@ An example of a running subscription
 - [Optional but recommended] Create and activate your virtual env, like Anaconda.
 - `pip install -r requirements.txt`
 - Under `secrets` folder,
+    - Create `admin.secret`, and put your Telegram id inside (only support one admin for now), where the errors 
+      (exceptions) messages will be sent to. Any only admin users can use `/updateauth` to add authorized users.
     - Create `token.secret`, and put your token inside.
+    - [Optional] Create `test_token.secret`, and put the your test bot token, if you want to have a test bot
+      when developing your own version. Use `TEST_MODE` in `config.py` to switch bots.
     - Create `authorized_users.secret`, and put the ids of authorized users inside, one per line, if you want only the 
       authorized users can use the subscription function. If you hope everyone can use it, set `REQUIRE_AUTH` in 
       `config.py` (located under project root) as `False`.
@@ -102,7 +118,8 @@ documentation for more detailed information about docs, deployment, and so on.
 
 ## Questions, Bugs, and Contributions
 
-You can open an issue or email me (i AT tbis DOT me) directly. PR is welcome.
+You can open an issue or email me (i AT tbis DOT me) directly. You can also contact me 
+[@kirov_dev](https://t.me/kirov_dev) at Telegram. PR is welcome.
 
 ## License
 

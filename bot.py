@@ -14,12 +14,13 @@ from telegram.ext import (
     Filters,
     ConversationHandler,
     CallbackContext,
+    Defaults,
 )
 
 from utils.const import *
 from utils.msg import *
 from utils.util import *
-from config import *
+import config
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
@@ -114,12 +115,12 @@ def unknown(update: Update, context: CallbackContext) -> None:
 def auth_check_subscribe(update: Update, context: CallbackContext) -> int:
     user = update.message.from_user
     logger.info("User %s starts to subscribe.", user.full_name)
-    if REQUIRE_AUTH and str(user.id) not in AUTHORIZED_USERS:
+    if config.REQUIRE_AUTH and str(user.id) not in config.AUTHORIZED_USERS:
         update.message.reply_text(NO_AUTH_MSG)
         update.message.reply_text(TEST_NEED_MSG)
         return ConversationHandler.END
     else:
-        if len(context.job_queue.jobs()) >= JOB_LIMIT:
+        if len(context.job_queue.jobs()) >= config.JOB_LIMIT:
             update.message.reply_text('Sorry, you have too many subscriptions. Please use /mysub to cancel some first.')
             return ConversationHandler.END
 
@@ -229,6 +230,7 @@ def appt_check(context: CallbackContext):
         if len(result) == 1:
             context.bot.send_message(chat_id=detail['CHAT_ID'],
                                      text=gen_avail_places(result, detail['SERVICE_URL'], is_from_parse_one))
+            logger.info('Find one and send to ' + str(detail['CHAT_ID']))
         else:
             logger.error('No available place found.')
 
@@ -257,7 +259,7 @@ def auth_check_sublist(update: Update, context: CallbackContext) -> int:
     user = update.message.from_user
     logger.info("User %s starts to check subscription list.", user.full_name)
 
-    if REQUIRE_AUTH and str(user.id) not in AUTHORIZED_USERS:
+    if config.REQUIRE_AUTH and str(user.id) not in config.AUTHORIZED_USERS:
         update.message.reply_text(NO_AUTH_MSG)
         return ConversationHandler.END
     else:
@@ -305,10 +307,22 @@ def cancel_job(update: Update, context: CallbackContext) -> int:
     return ConversationHandler.END
 
 
-def main() -> None:
-    updater = Updater(token=TOKEN, use_context=True)
-    dispatcher = updater.dispatcher
+def update_auth(update: Update, context: CallbackContext) -> None:
+    user = update.message.from_user
+    logger.info("User %s starts to update authorized user list.", user.full_name)
 
+    if str(user.id) != config.ADMIN:
+        update.message.reply_text('You do not have the admin privilege to do so.')
+    else:
+        config.AUTHORIZED_USERS = config.load_secrets('authorized_users')
+        update.message.reply_text('Authorized users updated successfully!')
+        update.message.reply_text(str(config.AUTHORIZED_USERS))
+
+
+def main() -> None:
+    default = Defaults(disable_web_page_preview=True)
+    updater = Updater(token=config.TOKEN, use_context=True, defaults=default)
+    dispatcher = updater.dispatcher
     check_conv_handler = ConversationHandler(
         entry_points=[CommandHandler('check', check)],
         states={
@@ -342,6 +356,7 @@ def main() -> None:
     dispatcher.add_handler(CommandHandler('start', start))
     dispatcher.add_handler(CommandHandler('help', help))
     dispatcher.add_handler(CommandHandler('cancel', global_cancel))
+    dispatcher.add_handler(CommandHandler('updateauth', update_auth))
     dispatcher.add_handler(MessageHandler(Filters.text & (~Filters.command), usr_msg))
     dispatcher.add_handler(MessageHandler(Filters.command, unknown))
 
