@@ -1,7 +1,7 @@
 from utils.secret import *
 
 # if test mode, the bot will be switched to a test bot
-TEST_MODE = True
+TEST_MODE = False
 
 TOKEN = load_token(TEST_MODE)
 
