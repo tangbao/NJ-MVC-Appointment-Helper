@@ -9,14 +9,12 @@ a little.
 
 Stay safe.
 
-## Bot Updates
+## Recent Updates
 
 For now, I am working on the persistence of the bot - make everything, including the job queue of the bot persistent 
 after restarting the bot. So please remember to go back and check for updates.
 
-### 2021 Aug 25
-
-Add `admin` role. Admin can use `/updateauth` cmd to update the authorized users list without restarting the bot.
+You are welcome to contact me to be an authorized user.
 
 ## Demo
 
@@ -51,7 +49,7 @@ You can have at most three subscriptions.
 
 `/help` Show the help message.
 
-`/updateauth` Update the authorized user list so that you do not need to restart the bot. Admin user only.
+`/updateconfig` Update the config so that you do not need to restart the bot. Admin user only.
 
 ## Examples
 
@@ -94,16 +92,8 @@ An example of a running subscription
 - `git clone https://github.com/tangbao/NJ-MVC-Appointment-Helper.git`
 - [Optional but recommended] Create and activate your virtual env, like Anaconda.
 - `pip install -r requirements.txt`
-- Under `secrets` folder,
-    - Create `admin.secret`, and put your Telegram id inside (only support one admin for now), where the errors 
-      (exceptions) messages will be sent to. Any only admin users can use `/updateauth` to add authorized users.
-    - Create `token.secret`, and put your token inside.
-    - [Optional] Create `test_token.secret`, and put the your test bot token, if you want to have a test bot
-      when developing your own version. Use `TEST_MODE` in `config.py` to switch bots.
-    - Create `authorized_users.secret`, and put the ids of authorized users inside, one per line, if you want only the 
-      authorized users can use the subscription function. If you hope everyone can use it, set `REQUIRE_AUTH` in 
-      `config.py` (located under project root) as `False`.
-- If you want to change the maximum number of subscriptions a user can create, change `JOB_LIMIT` in `config.py`.
+- Check `config.yaml` if you want some customized settings, like the maximum number of subscriptions a user can create.
+- Rename `config.secret.yaml.example` to `config.secret.yaml`, follow the comments to finish the config.
 - Run `bot.py` and start using!
 
 ### Resources

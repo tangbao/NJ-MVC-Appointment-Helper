@@ -51,25 +51,29 @@ def is_expired_date(date_str):
 
 def parse_response_all(response, list_len):
     dom = etree.HTML(response.text)
-    js_content = str(dom.xpath('/html/body/script[22]/text()')[0])
-    time_data = js_content.split('\r\n')[2][23:]
-    time_data_list_raw = json.loads(time_data)
-    time_data_list = []
-    for item in time_data_list_raw:
-        time = item['FirstOpenSlot'][-19:]
-        if time == "ointments Available":
-            continue
-        time_fmt = datetime.strptime(time, '%m/%d/%Y %I:%M %p')
-        time_data_list.append({
-            'LocationId': item['LocationId'],
-            'FirstOpenSlot': time_fmt
-        })
-    sorted_list = sorted(time_data_list, key=lambda e: e.__getitem__('FirstOpenSlot'))
-
-    if len(sorted_list) < list_len:
-        return sorted_list
+    try:
+        js_content = str(dom.xpath('/html/body/script[22]/text()')[0])
+    except IndexError:
+        return []
     else:
-        return sorted_list[:list_len]
+        time_data = js_content.split('\r\n')[2][23:]
+        time_data_list_raw = json.loads(time_data)
+        time_data_list = []
+        for item in time_data_list_raw:
+            time = item['FirstOpenSlot'][-19:]
+            if time == "ointments Available":
+                continue
+            time_fmt = datetime.strptime(time, '%m/%d/%Y %I:%M %p')
+            time_data_list.append({
+                'LocationId': item['LocationId'],
+                'FirstOpenSlot': time_fmt
+            })
+        sorted_list = sorted(time_data_list, key=lambda e: e.__getitem__('FirstOpenSlot'))
+
+        if len(sorted_list) < list_len:
+            return sorted_list
+        else:
+            return sorted_list[:list_len]
 
 
 def parse_response_one(response, loc_id):
@@ -85,7 +89,7 @@ def parse_response_one(response, loc_id):
                 'LocationId': loc_id,
                 'FirstOpenSlot': time_fmt
             }]
-    return return_time
+        return return_time
 
 
 def gen_avail_places(sorted_list, service_time_url, is_from_parse_one):
@@ -95,9 +99,9 @@ def gen_avail_places(sorted_list, service_time_url, is_from_parse_one):
     reply = 'The most recent {:d} places you can visit: (date in yyyy-mm-dd, time in 24H)\n\n'.format(len(sorted_list))
 
     for item in sorted_list:
-        reply = reply + 'Location: ' + LOCATION_ID[str(item['LocationId'])] + ' (' \
+        reply = reply + 'Time: ' + str(item['FirstOpenSlot']) + '\n' \
+                + 'Location: ' + LOCATION_ID[str(item['LocationId'])] + ' (' \
                 + LOCATION_ID_ADDR[str(item['LocationId'])] + ')\n' \
-                + 'Time: ' + str(item['FirstOpenSlot']) + '\n' \
                 + 'Link: ' + service_time_url + '/'
         if not is_from_parse_one:
             reply = reply + str(item['LocationId']) + '\n\n'

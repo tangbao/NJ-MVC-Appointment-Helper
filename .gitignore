@@ -1,3 +1,5 @@
 *.secret
 
 *.dat
+
+config.secret.yaml

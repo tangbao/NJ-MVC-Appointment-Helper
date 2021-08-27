@@ -20,11 +20,13 @@ from telegram.ext import (
 from utils.const import *
 from utils.msg import *
 from utils.util import *
-import config
+from utils.config import load_config
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+config = load_config(logger)
 
 SERVICE_TIME = 0
 LOCATION_SELECT, TIME_SELECT, CONFIRM_INFO, JOB_REG = range(4)
@@ -78,7 +80,7 @@ def service_time_check(update: Update, context: CallbackContext) -> int:
                               'It may take some time to get the results because NJ MVC website is unstable.',
                               reply_markup=ReplyKeyboardRemove())
     try:
-        response = requests.get(service_time_url)
+        response = requests.get(service_time_url, timeout=config['timeout'])
     except Exception:
         logger.error('Fail to connect to NJ MVC website.')
         update.message.reply_text(
@@ -115,12 +117,12 @@ def unknown(update: Update, context: CallbackContext) -> None:
 def auth_check_subscribe(update: Update, context: CallbackContext) -> int:
     user = update.message.from_user
     logger.info("User %s starts to subscribe.", user.full_name)
-    if config.REQUIRE_AUTH and str(user.id) not in config.AUTHORIZED_USERS:
+    if config['require auth'] and str(user.id) not in config['authorized users']:
         update.message.reply_text(NO_AUTH_MSG)
         update.message.reply_text(TEST_NEED_MSG)
         return ConversationHandler.END
     else:
-        if len(context.job_queue.jobs()) >= config.JOB_LIMIT:
+        if len(context.job_queue.jobs()) >= config['job limit']:
             update.message.reply_text('Sorry, you have too many subscriptions. Please use /mysub to cancel some first.')
             return ConversationHandler.END
 
@@ -217,7 +219,7 @@ def appt_check(context: CallbackContext):
                                  'places found by the bot.')
         job.schedule_removal()
     try:
-        response = requests.get(detail['SERVICE_URL'])
+        response = requests.get(detail['SERVICE_URL'], timeout=config['timeout'])
     except:
         logger.error('Fail to connect to NJ MVC website.')
     else:
@@ -248,7 +250,7 @@ def job_reg(update: Update, context: CallbackContext) -> int:
         job['SERVICE_URL'] = job['SERVICE_URL'] + '/' + job['LOCATION_ID']
     name = job['TIME'] + ' (date in yymmdd), ' + LOCATION_ID[job['LOCATION_ID']] + ' (location), ' + job['SERVICE']
     job['NAME'] = name
-    context.job_queue.run_repeating(appt_check, interval=300, first=10, name=name, context=job)
+    context.job_queue.run_repeating(appt_check, interval=config['query interval'], first=10, name=name, context=job)
     context.user_data.clear()
     update.message.reply_text('Your subscription ' + name + ' is scheduled successfully.',
                               reply_markup=ReplyKeyboardRemove())
@@ -259,7 +261,7 @@ def auth_check_sublist(update: Update, context: CallbackContext) -> int:
     user = update.message.from_user
     logger.info("User %s starts to check subscription list.", user.full_name)
 
-    if config.REQUIRE_AUTH and str(user.id) not in config.AUTHORIZED_USERS:
+    if config['require auth'] and str(user.id) not in config['authorized users']:
         update.message.reply_text(NO_AUTH_MSG)
         return ConversationHandler.END
     else:
@@ -307,21 +309,26 @@ def cancel_job(update: Update, context: CallbackContext) -> int:
     return ConversationHandler.END
 
 
-def update_auth(update: Update, context: CallbackContext) -> None:
+def update_config(update: Update, context: CallbackContext) -> None:
     user = update.message.from_user
     logger.info("User %s starts to update authorized user list.", user.full_name)
 
-    if str(user.id) != config.ADMIN:
+    if str(user.id) != config['admin']:
         update.message.reply_text('You do not have the admin privilege to do so.')
     else:
-        config.AUTHORIZED_USERS = config.load_secrets('authorized_users')
-        update.message.reply_text('Authorized users updated successfully!')
-        update.message.reply_text(str(config.AUTHORIZED_USERS))
+        globals()['config'] = load_config(logger)
+        update.message.reply_text('Configs updated successfully!')
 
 
 def main() -> None:
     default = Defaults(disable_web_page_preview=True)
-    updater = Updater(token=config.TOKEN, use_context=True, defaults=default)
+
+    if config['test mode']:
+        token = config['test token']
+    else:
+        token = config['token']
+
+    updater = Updater(token=token, use_context=True, defaults=default)
     dispatcher = updater.dispatcher
     check_conv_handler = ConversationHandler(
         entry_points=[CommandHandler('check', check)],
@@ -356,7 +363,7 @@ def main() -> None:
     dispatcher.add_handler(CommandHandler('start', start))
     dispatcher.add_handler(CommandHandler('help', help))
     dispatcher.add_handler(CommandHandler('cancel', global_cancel))
-    dispatcher.add_handler(CommandHandler('updateauth', update_auth))
+    dispatcher.add_handler(CommandHandler('updateconfig', update_config))
     dispatcher.add_handler(MessageHandler(Filters.text & (~Filters.command), usr_msg))
     dispatcher.add_handler(MessageHandler(Filters.command, unknown))
 
