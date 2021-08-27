@@ -114,6 +114,15 @@ def unknown(update: Update, context: CallbackContext) -> None:
     context.bot.send_message(chat_id=update.effective_chat.id, text="Sorry, the command does not support.")
 
 
+def get_usr_jobs(context, uid):
+    jobs = context.job_queue.jobs()
+    usr_jobs = []
+    for job in jobs:
+        if job.context['CHAT_ID'] == uid:
+            usr_jobs.append(job)
+    return usr_jobs
+
+
 def auth_check_subscribe(update: Update, context: CallbackContext) -> int:
     user = update.message.from_user
     logger.info("User %s starts to subscribe.", user.full_name)
@@ -122,7 +131,7 @@ def auth_check_subscribe(update: Update, context: CallbackContext) -> int:
         update.message.reply_text(TEST_NEED_MSG)
         return ConversationHandler.END
     else:
-        if len(context.job_queue.jobs()) >= config['job limit']:
+        if len(get_usr_jobs(context, user.id)) >= config['job limit']:
             update.message.reply_text('Sorry, you have too many subscriptions. Please use /mysub to cancel some first.')
             return ConversationHandler.END
 
@@ -265,7 +274,7 @@ def auth_check_sublist(update: Update, context: CallbackContext) -> int:
         update.message.reply_text(NO_AUTH_MSG)
         return ConversationHandler.END
     else:
-        jobs = context.job_queue.jobs()
+        jobs = get_usr_jobs(context, user.id)
         if len(jobs) == 0:
             update.message.reply_text('You have no running subscriptions.')
             return ConversationHandler.END
@@ -285,7 +294,7 @@ def cancel_job(update: Update, context: CallbackContext) -> int:
     user = update.message.from_user
     job_idx = update.message.text
     logger.info("User %s starts to cancel job %s.", user.full_name, job_idx)
-    jobs = context.job_queue.jobs()
+    jobs = get_usr_jobs(context, user.id)
     jobs_str_list = [str(x) for x in list(range(len(jobs)+1))]
 
     if job_idx not in jobs_str_list:
