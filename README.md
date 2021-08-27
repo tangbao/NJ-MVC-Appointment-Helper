@@ -11,6 +11,10 @@ Stay safe.
 
 ## Recent Updates
 
+**Please update your bot to a newer version 
+(at least [2950f78](https://github.com/tangbao/NJ-MVC-Appointment-Helper/commit/2950f7876688896e9286b55be0904d7365ee673e))
+where a significant bug is fixed. See [this Telegram message](https://t.me/njmvc_bot_notif/8) for details.**
+
 For now, I am working on the persistence of the bot - make everything, including the job queue of the bot persistent 
 after restarting the bot. So please remember to go back and check for updates.
 
@@ -93,7 +97,8 @@ An example of a running subscription
 - [Optional but recommended] Create and activate your virtual env, like Anaconda.
 - `pip install -r requirements.txt`
 - Check `config.yaml` if you want some customized settings, like the maximum number of subscriptions a user can create.
-- Rename `config.secret.yaml.example` to `config.secret.yaml`, follow the comments to finish the config.
+- Make a copy of `config.secret.yaml.example`, name it as `config.secret.yaml`, follow the comments inside 
+  to finish the config.
 - Run `bot.py` and start using!
 
 ### Resources
