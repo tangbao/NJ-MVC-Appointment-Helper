@@ -32,24 +32,23 @@ def is_valid_date(date_str):
     except ValueError:
         return False
 
-    ts = dt_to_ts(dt) + 86400  # the end of day
-
-    if ts < datetime.now().timestamp():
-        return False
-    else:
-        return True
+    return not is_expired_date(date_str)
 
 
+# check if the subscription (job) has expired
 def is_expired_date(date_str):
     dt = datetime.strptime(date_str, '%y%m%d')
     ts = dt_to_ts(dt) + 86400  # the end of day
-    if ts < datetime.now().timestamp():
-        return True
-    else:
-        return False
+    return ts < datetime.now().timestamp()
 
 
-def parse_response_all(response, list_len):
+# if job_date < target_date, return true; else return false
+def compare_date(job_date, last_time):
+    last_time_dt = datetime.strptime(last_time, '%y%m%d')
+    return dt_to_ts(job_date) <= dt_to_ts(last_time_dt) + 86400
+
+
+def parse_response_all(response, last_time, list_len):
     dom = etree.HTML(response.text)
     try:
         js_content = str(dom.xpath('/html/body/script[22]/text()')[0])
@@ -64,19 +63,17 @@ def parse_response_all(response, list_len):
             if time == "ointments Available":
                 continue
             time_fmt = datetime.strptime(time, '%m/%d/%Y %I:%M %p')
-            time_data_list.append({
-                'LocationId': item['LocationId'],
-                'FirstOpenSlot': time_fmt
-            })
+            if compare_date(time_fmt, last_time):
+                time_data_list.append({
+                    'LocationId': item['LocationId'],
+                    'FirstOpenSlot': time_fmt
+                })
         sorted_list = sorted(time_data_list, key=lambda e: e.__getitem__('FirstOpenSlot'))
 
-        if len(sorted_list) < list_len:
-            return sorted_list
-        else:
-            return sorted_list[:list_len]
+        return sorted_list[:list_len]
 
 
-def parse_response_one(response, loc_id):
+def parse_response_one(response, last_time, loc_id):
     dom = etree.HTML(response.text)
     try:
         time_raw = str(dom.xpath('/html/body/main/div/div[2]/div/div/div/div[3]/div/div[2]/div/a/@href')[0]).split('/')
@@ -85,10 +82,12 @@ def parse_response_one(response, loc_id):
     else:
         time = time_raw[-2] + ' ' + time_raw[-1]
         time_fmt = datetime.strptime(time, '%Y-%m-%d %H%M')
-        return_time = [{
-                'LocationId': loc_id,
-                'FirstOpenSlot': time_fmt
-            }]
+        return_time = []
+        if compare_date(time_fmt, last_time):
+            return_time.append({
+                    'LocationId': loc_id,
+                    'FirstOpenSlot': time_fmt
+                })
         return return_time
 
 

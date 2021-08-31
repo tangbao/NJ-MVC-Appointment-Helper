@@ -213,7 +213,8 @@ def confirm_info(update: Update, context: CallbackContext) -> int:
                                   ' at ' + LOCATION_ID[context.user_data.get('LOCATION_ID')] +
                                   ' on or before ' + context.user_data.get('TIME', '331231') + ' (yymmdd).\n\n'
                                   'Reply /confirm to start the subscription. The bot will query available '
-                                  'appointments every 5 min, and send you a notification when one is available.\n\n'
+                                  'appointments every ' + str(config['query interval']) + ' seconds, and send you a '
+                                  'notification when one is available.\n\n'
                                   'Reply /cancel to start a new subscribe if there\'s anything wrong.',
                                   reply_markup=ReplyKeyboardMarkup(
                                       [['/confirm', '/cancel']], one_time_keyboard=True, input_field_placeholder='y/n'
@@ -236,10 +237,10 @@ def appt_check(context: CallbackContext):
         logger.error('Fail to connect to NJ MVC website.')
     else:
         if detail['LOCATION_ID'] == '0':
-            result = parse_response_all(response, 1)
+            result = parse_response_all(response, detail['TIME'], 1)
             is_from_parse_one = False
         else:
-            result = parse_response_one(response, detail['LOCATION_ID'])
+            result = parse_response_one(response, detail['TIME'], detail['LOCATION_ID'])
             is_from_parse_one = True
         if len(result) == 1:
             context.bot.send_message(chat_id=detail['CHAT_ID'],

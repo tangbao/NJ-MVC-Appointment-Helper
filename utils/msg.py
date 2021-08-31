@@ -12,6 +12,7 @@ SET_LOC_MSG = 'Please tell me the preferred MVC location you want to subscribe. 
               'please reply All.'
 
 TME_FMT_MSG = 'The format is yymmdd (US Eastern Time), e.g., 210704 means July 4th, 2021.\n\n' + \
+              'Also, the date should not be earlier than then current date.\n\n' + \
               'If you have no requirements on this, please reply All.'
 
 NO_AUTH_MSG = 'Sorry, you are not the authorized user, you cannot use this function.\n\n' + \

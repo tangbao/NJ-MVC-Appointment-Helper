@@ -11,9 +11,7 @@ Stay safe.
 
 ## Recent Updates
 
-**Please update your bot to a newer version 
-(at least [2950f78](https://github.com/tangbao/NJ-MVC-Appointment-Helper/commit/2950f7876688896e9286b55be0904d7365ee673e))
-where a significant bug is fixed. See [this Telegram message](https://t.me/njmvc_bot_notif/8) for details.**
+**Please always update to the newest version before reporting any bugs.**
 
 For now, I am working on the persistence of the bot - make everything, including the job queue of the bot persistent 
 after restarting the bot. So please remember to go back and check for updates.
