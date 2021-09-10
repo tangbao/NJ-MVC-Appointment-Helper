@@ -91,7 +91,7 @@ def service_time_check(update: Update, context: CallbackContext) -> int:
         )
         return ConversationHandler.END
     else:
-        sorted_time_list = parse_response_all(response, 3)
+        sorted_time_list = parse_response_all(response, '331231', 3)
         update.message.reply_text(gen_avail_places(sorted_time_list, service_time_url, is_from_parse_one=False))
         update.message.reply_text('Thank you for using. Bye!')
         return ConversationHandler.END
