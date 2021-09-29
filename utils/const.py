@@ -71,7 +71,7 @@ LOCATION_ID = {'186': 'Bakers Basin', '187': 'Bayonne', '189': 'Camden', '208': 
                '100': 'Washington', '147': 'Cherry Hill', '148': 'East Orange', '149': 'Hazlet', '150': 'Jersey City',
                '151': 'Lakewood', '152': 'Manahawkin', '153': 'Medford', '154': 'Newton', '255': 'Rio Grande',
                '155': 'Runnemede', '156': 'Somerville', '157': 'South Brunswick', '158': 'Springfield',
-               '159': 'Trenton Regional', '160': 'Turnersville', '161': 'Wallington', '162': 'Washington'}
+               '159': 'Trenton Regional', '160': 'Turnersville', '161': 'Wallington', '162': 'Washington', '0': 'All'}
 
 LOCATION_ID_ADDR = {'186': '3200 Brunswick Pike, Lawrenceville, NJ, 08648',
                     '187': 'RT 440 & 1347 Kennedy Blvd. , Family Dollar Plaza, Bayonne, NJ, 07002',

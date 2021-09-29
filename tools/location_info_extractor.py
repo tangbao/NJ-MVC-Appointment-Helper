@@ -40,6 +40,7 @@ def main():
         loc_name_dict[code] = loc_name_sub_dict
         loc_addr_dict[code] = loc_addr_sub_dict
 
+    loc_id_dict['0'] = 'All'
     print(loc_id_dict)
     print(loc_name_dict)
     print(loc_id_addr_dict)
