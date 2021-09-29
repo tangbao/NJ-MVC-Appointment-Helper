@@ -105,8 +105,8 @@ The bot is using [python-telegram-bot](https://github.com/python-telegram-bot/py
 documentation for more detailed information about docs, deployment, and so on.
 
 ## Development Plan (NO GUARANTEE)
+- Make the location list be updated automatically.
 - Make the bot persistent - subscription still exists after the bot restarts.
-- Improve user experience and logger info.
 - Automatically submit an appointment (I guess I will never do this).
 
 ## Questions, Bugs, and Contributions
