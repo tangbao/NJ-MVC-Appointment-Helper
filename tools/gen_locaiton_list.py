@@ -3,13 +3,12 @@ import os
 os.chdir('../')
 from utils.const import *
 
-
 LOCATION_ADDR = {'15': {'186': '3200 Brunswick Pike, Lawrenceville, NJ, 08648',
                         '187': 'RT 440 & 1347 Kennedy Blvd. , Family Dollar Plaza, Bayonne, NJ, 07002',
                         '189': '2600 Mt. Ephraim Avenue, Camden, NJ, 08104',
                         '208': '6725 Black Horse Pike, Harbor Square, Egg Harbor Twp, NJ, 08234-3935',
                         '191': '400 Creek Road, Delanco, NJ, 08075', '192': '109 Rt. 36, Eatontown, NJ, 07724',
-                        '194': '45 Kilmer Road, Edison, NJ, 08817',
+                        '194': '45 Kilmer Road, Edison, NJ, 08817', '264': '17 Caldwell Place, Elizabeth, NJ, 07201',
                         '195': '181 Routes 31 & 202 B, Flemington, NJ, 08551',
                         '197': '811 Okerson Road, Freehold, NJ, 07728', '198': '8 Mill Street, Lodi, NJ, 07644',
                         '200': '228 Frelinghuysen Avenue, Newark, NJ, 07114',
@@ -29,7 +28,7 @@ LOCATION_ADDR = {'15': {'186': '3200 Brunswick Pike, Lawrenceville, NJ, 08648',
                         '166': '2600 Mt. Ephraim Avenue, Camden, NJ, 08104',
                         '185': '6725 Black Horse Pike, Harbor Square, Egg Harbor Twp, NJ, 08234-3935',
                         '168': '400 Creek Road, Delanco, NJ, 08075', '169': '109 Rt. 36, Eatontown, NJ, 07724',
-                        '171': '45 Kilmer Road, Edison, NJ, 08817',
+                        '171': '45 Kilmer Road, Edison, NJ, 08817', '259': '17 Caldwell Place, Elizabeth, NJ, 07201',
                         '172': '181 Routes 31 & 202 B, Flemington, NJ, 08551',
                         '174': '811 Okerson Road, Freehold, NJ, 07728', '175': '8 Mill Street, Lodi, NJ, 07644',
                         '177': '228 Frelinghuysen Avenue, Newark, NJ, 07114',
@@ -49,7 +48,7 @@ LOCATION_ADDR = {'15': {'186': '3200 Brunswick Pike, Lawrenceville, NJ, 08648',
                         '127': '2600 Mt. Ephraim Avenue, Camden, NJ, 08104',
                         '146': '6725 Black Horse Pike, Harbor Square, Egg Harbor Twp, NJ, 08234-3935',
                         '129': '400 Creek Road, Delanco, NJ, 08075', '130': '109 Rt. 36, Eatontown, NJ, 07724',
-                        '132': '45 Kilmer Road, Edison, NJ, 08817',
+                        '132': '45 Kilmer Road, Edison, NJ, 08817', '265': '17 Caldwell Place, Elizabeth, NJ, 07201',
                         '133': '181 Routes 31 & 202 B, Flemington, NJ, 08551',
                         '135': '811 Okerson Road, Freehold, NJ, 07728', '136': '8 Mill Street, Lodi, NJ, 07644',
                         '138': '228 Frelinghuysen Avenue, Newark, NJ, 07114',
@@ -69,7 +68,7 @@ LOCATION_ADDR = {'15': {'186': '3200 Brunswick Pike, Lawrenceville, NJ, 08648',
                         '212': '2600 Mt. Ephraim Avenue, Camden, NJ, 08104',
                         '231': '6725 Black Horse Pike, Harbor Square, Egg Harbor Twp, NJ, 08234-3935',
                         '214': '400 Creek Road, Delanco, NJ, 08075', '215': '109 Rt. 36, Eatontown, NJ, 07724',
-                        '217': '45 Kilmer Road, Edison, NJ, 08817',
+                        '217': '45 Kilmer Road, Edison, NJ, 08817', '262': '17 Caldwell Place, Elizabeth, NJ, 07201',
                         '218': '181 Routes 31 & 202 B, Flemington, NJ, 08551',
                         '220': '811 Okerson Road, Freehold, NJ, 07728', '221': '8 Mill Street, Lodi, NJ, 07644',
                         '223': '228 Frelinghuysen Avenue, Newark, NJ, 07114',
@@ -109,7 +108,7 @@ LOCATION_ADDR = {'15': {'186': '3200 Brunswick Pike, Lawrenceville, NJ, 08648',
                         '104': '2600 Mt. Ephraim Avenue, Camden, NJ, 08104',
                         '105': '6725 Black Horse Pike, Harbor Square, Egg Harbor Twp, NJ, 08234-3935',
                         '107': '400 Creek Road, Delanco, NJ, 08075', '108': '109 Rt. 36, Eatontown, NJ, 07724',
-                        '110': '45 Kilmer Road, Edison, NJ, 08817',
+                        '110': '45 Kilmer Road, Edison, NJ, 08817', '261': '17 Caldwell Place, Elizabeth, NJ, 07201',
                         '111': '181 Routes 31 & 202 B, Flemington, NJ, 08551',
                         '113': '811 Okerson Road, Freehold, NJ, 07728', '114': '8 Mill Street, Lodi, NJ, 07644',
                         '116': '228 Frelinghuysen Avenue, Newark, NJ, 07114',
@@ -129,7 +128,8 @@ LOCATION_ADDR = {'15': {'186': '3200 Brunswick Pike, Lawrenceville, NJ, 08648',
                        '10': '2600 Mt. Ephraim Avenue, Camden, NJ, 08104',
                        '11': '6725 Black Horse Pike, Harbor Square, Egg Harbor Twp, NJ, 08234-3935',
                        '13': '400 Creek Road, Delanco, NJ, 08075', '14': '109 Rt. 36, Eatontown, NJ, 07724',
-                       '16': '45 Kilmer Road, Edison, NJ, 08817', '17': '181 Routes 31 & 202 B, Flemington, NJ, 08551',
+                       '16': '45 Kilmer Road, Edison, NJ, 08817', '260': '17 Caldwell Place, Elizabeth, NJ, 07201',
+                       '17': '181 Routes 31 & 202 B, Flemington, NJ, 08551',
                        '19': '811 Okerson Road, Freehold, NJ, 07728', '20': '8 Mill Street, Lodi, NJ, 07644',
                        '22': '228 Frelinghuysen Avenue, Newark, NJ, 07114',
                        '23': '8901 Park Plaza, 90th & Bergenline Avenue , North Bergen, NJ, 07047',
@@ -148,7 +148,8 @@ LOCATION_ADDR = {'15': {'186': '3200 Brunswick Pike, Lawrenceville, NJ, 08648',
                        '49': '2600 Mt. Ephraim Avenue, Camden, NJ, 08104',
                        '48': '6725 Black Horse Pike, Harbor Square, Egg Harbor Twp, NJ, 08234-3935',
                        '50': '400 Creek Road, Delanco, NJ, 08075', '51': '109 Rt. 36, Eatontown, NJ, 07724',
-                       '52': '45 Kilmer Road, Edison, NJ, 08817', '53': '181 Routes 31 & 202 B, Flemington, NJ, 08551',
+                       '52': '45 Kilmer Road, Edison, NJ, 08817', '263': '17 Caldwell Place, Elizabeth, NJ, 07201',
+                       '53': '181 Routes 31 & 202 B, Flemington, NJ, 08551',
                        '54': '811 Okerson Road, Freehold, NJ, 07728', '55': '8 Mill Street, Lodi, NJ, 07644',
                        '56': '228 Frelinghuysen Avenue, Newark, NJ, 07114',
                        '57': '8901 Park Plaza, 90th & Bergenline Avenue , North Bergen, NJ, 07047',
@@ -214,7 +215,6 @@ LOCATION_ADDR = {'15': {'186': '3200 Brunswick Pike, Lawrenceville, NJ, 08648',
                         '161': '450 Main Avenue, Wallington Square, Wallington, NJ, 07057',
                         '162': '404 E Washington Ave, Washington, NJ, 07882'}}
 
-
 if __name__ == '__main__':
     for item in LOCATION_NAME.items():
         url = MVC_URL + item[0] + '/'
@@ -222,7 +222,7 @@ if __name__ == '__main__':
         print('| Name | Id | Address |')
         print('| :---: | :---: | :---: |')
         for subitem in item[1].items():
-            md_line = '|[' + subitem[1] + '](' + url + subitem[0] + ')|' +\
+            md_line = '|[' + subitem[1] + '](' + url + subitem[0] + ')|' + \
                       subitem[0] + '|' + LOCATION_ADDR[item[0]][subitem[0]] + '|'
             print(md_line)
         print('\n')
