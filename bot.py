@@ -227,7 +227,7 @@ def appt_check(context: CallbackContext):
     detail = job.context
     if is_expired_date(detail['TIME']):
         context.bot.send_message(chat_id=detail['CHAT_ID'],
-                                 text='You subscription ' + detail['name'] + ' has expired. Please start a new one.\n\n'
+                                 text='You subscription ' + detail['NAME'] + ' has expired. Please start a new one.\n\n'
                                  'If you received no messages from the bot, it could because there was no available'
                                  'places found by the bot.')
         job.schedule_removal()
