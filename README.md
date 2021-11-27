@@ -13,6 +13,10 @@ Stay safe.
 
 **Please always update to the newest version before reporting any bugs.**
 
+**MVC now has NON-CDL KNOWLEDGE TESTING (First Appointments Starting 12/6/2021) and KNOWLEDGE TESTING 
+(Appointments available through 12/4/2021). I guess they are the same thing and the only difference 
+is the date, but please contact MVC for clarification.**
+
 For now, I am working on the persistence of the bot - make everything, including the job queue of the bot persistent 
 after restarting the bot. So please remember to go back and check for updates.
 

@@ -3,8 +3,9 @@
 **Please note that the same location may have different id number for different services.**
 **For example, the id of Lodi is 198 in INITIAL PERMIT, but 136 for REAL ID.**
 
-**I am not sure what the difference between NON-CDL KNOWLEDGE TESTING and KNOWLEDGE TESTING is (I guess it is a 
-replacement), please ask MVC for clarification.**
+**MVC now has NON-CDL KNOWLEDGE TESTING (First Appointments Starting 12/6/2021) and KNOWLEDGE TESTING 
+(Appointments available through 12/4/2021). I guess they are the same thing and the only difference 
+is the date, but please contact MVC for clarification.**
 
 I recommend to input id to the bot directly. If you want to use the location name, please note that 
 the bot is case-sensitive, which means `North Plainfield` is accepted but `north Plainfield` is not.
@@ -22,7 +23,7 @@ the bot is case-sensitive, which means `North Plainfield` is accepted but `north
 1. [RENEWAL: LICENSE OR NON-DRIVER ID](#renewal-license-or-non-driver-id)
 1. [REAL ID - (NON-RENEWAL)](#real-id---non-renewal)
 1. [CDL PERMIT OR ENDORSEMENT - (NOT FOR KNOWLEDGE TEST)](#cdl-permit-or-endorsement---not-for-knowledge-test)
-1. [RENEWAL: CDL](##renewal-cdl)
+1. [RENEWAL: CDL](#renewal-cdl)
 1. [TRANSFER FROM OUT OF STATE](#transfer-from-out-of-state)
 1. [NEW TITLE OR REGISTRATION](#new-title-or-registration)
 1. [REGISTRATION RENEWAL](#registration-renewal)
