@@ -39,3 +39,7 @@ TEST_NEED_MSG = 'If you want to be one of the authorized users of this bot that 
                 '****************\n' \
                 'You don\'t have to be a programmer, but just a normal user who can report bugs to me.\n' \
                 '****************'
+
+KT_MSG = 'MVC now has NON-CDL KNOWLEDGE TESTING (First Appointments Starting 12/6/2021) and KNOWLEDGE TESTING ' \
+         '(Appointments available through 12/4/2021). I guess they are the same thing and the only difference ' \
+         'is the date, but please contact MVC for clarification.'

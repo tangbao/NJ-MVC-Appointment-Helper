@@ -51,7 +51,8 @@ def global_cancel(update: Update, context: CallbackContext) -> None:
     logger.info("User %s chooses global cancel", user.full_name)
     context.user_data.clear()
     update.message.reply_text(
-        'There is no on-going conversation session to be canceled.', reply_markup=ReplyKeyboardRemove()
+        'There is no on-going conversation session to be canceled. If you want to cancel a subscription, please use '
+        '/mysub', reply_markup=ReplyKeyboardRemove()
     )
 
 
@@ -59,6 +60,7 @@ def check(update: Update, context: CallbackContext) -> int:
     user = update.message.from_user
     logger.info("User %s starts to check time.", user.full_name)
     update.message.reply_text(TEST_NEED_MSG)
+    update.message.reply_text(KT_MSG)
 
     update.message.reply_text(
         CHECK_MSG,
@@ -138,6 +140,7 @@ def auth_check_subscribe(update: Update, context: CallbackContext) -> int:
             update.message.reply_text('Sorry, you have too many subscriptions. Please use /mysub to cancel some first.')
             return ConversationHandler.END
 
+        update.message.reply_text(KT_MSG)
         update.message.reply_text(
             CHECK_MSG,
             reply_markup=ReplyKeyboardMarkup(
