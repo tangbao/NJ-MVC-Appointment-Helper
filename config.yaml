@@ -12,7 +12,7 @@ require auth: true
 
 # The maximum number of subscriptions a user can have
 job limit: 3
-# Bot query timeout time in seconds. If the MVC website does not reply in {timeout} sec, return error.
+# Bot query timeout time in seconds. If the MVC website does not response in {timeout} sec, return error.
 timeout: 3
-# Bot query interval in seconds. 120 means check appointments every {query interval} sec.
+# Bot query interval in seconds. It means check appointments every {query interval} sec.
 query interval: 120

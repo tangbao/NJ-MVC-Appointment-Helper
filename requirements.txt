@@ -1,4 +1,5 @@
 requests
 lxml
-python-telegram-bot
+python-telegram-bot==13.7
 pyyaml
+apscheduler==3.6.3

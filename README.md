@@ -120,4 +120,4 @@ You can open an issue or email me (i AT tbis DOT me) directly. You can also cont
 
 ## License
 
-The project is published under the [WTFPL – Do What the Fuck You Want to Public License](http://www.wtfpl.net/).
+The project is published under the [GNU General Public License - v3.0](https://www.gnu.org/licenses/gpl-3.0.html).

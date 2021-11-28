@@ -20,10 +20,8 @@ from telegram.ext import (
     Defaults,
 )
 
-from utils.const import *
-from utils.msg import *
-from utils.util import *
-from utils.config import load_config
+from const import *
+from utils import *
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
