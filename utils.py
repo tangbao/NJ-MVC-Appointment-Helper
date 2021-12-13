@@ -79,21 +79,25 @@ def parse_response_all(response, last_time, list_len):
         return []
     else:
         time_data = js_content.split('\r\n')[2][23:]
-        time_data_list_raw = json.loads(time_data)
-        time_data_list = []
-        for item in time_data_list_raw:
-            time = item['FirstOpenSlot'][-19:]
-            if time == "ointments Available":
-                continue
-            time_fmt = datetime.strptime(time, '%m/%d/%Y %I:%M %p')
-            if compare_date(time_fmt, last_time):
-                time_data_list.append({
-                    'LocationId': item['LocationId'],
-                    'FirstOpenSlot': time_fmt
-                })
-        sorted_list = sorted(time_data_list, key=lambda e: e.__getitem__('FirstOpenSlot'))
+        try:
+            time_data_list_raw = json.loads(time_data)
+        except json.decoder.JSONDecodeError:
+            return []
+        else:
+            time_data_list = []
+            for item in time_data_list_raw:
+                time = item['FirstOpenSlot'][-19:]
+                if time == "ointments Available":
+                    continue
+                time_fmt = datetime.strptime(time, '%m/%d/%Y %I:%M %p')
+                if compare_date(time_fmt, last_time):
+                    time_data_list.append({
+                        'LocationId': item['LocationId'],
+                        'FirstOpenSlot': time_fmt
+                    })
+            sorted_list = sorted(time_data_list, key=lambda e: e.__getitem__('FirstOpenSlot'))
 
-        return sorted_list[:list_len]
+            return sorted_list[:list_len]
 
 
 def parse_response_one(response, last_time, loc_id):

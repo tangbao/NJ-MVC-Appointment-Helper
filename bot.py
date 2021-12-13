@@ -58,7 +58,6 @@ def check(update: Update, context: CallbackContext) -> int:
     user = update.message.from_user
     logger.info("User %s starts to check time.", user.full_name)
     update.message.reply_text(TEST_NEED_MSG)
-    update.message.reply_text(KT_MSG)
 
     update.message.reply_text(
         CHECK_MSG,
@@ -138,7 +137,6 @@ def auth_check_subscribe(update: Update, context: CallbackContext) -> int:
             update.message.reply_text('Sorry, you have too many subscriptions. Please use /mysub to cancel some first.')
             return ConversationHandler.END
 
-        update.message.reply_text(KT_MSG)
         update.message.reply_text(
             CHECK_MSG,
             reply_markup=ReplyKeyboardMarkup(

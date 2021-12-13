@@ -5,7 +5,7 @@ import requests
 from lxml import etree
 
 os.chdir('../')
-from utils.const import *
+from const import *
 
 
 def main():
@@ -41,10 +41,10 @@ def main():
         loc_addr_dict[code] = loc_addr_sub_dict
 
     loc_id_dict['0'] = 'All'
-    print(loc_id_dict)
-    print(loc_name_dict)
-    print(loc_id_addr_dict)
-    print(loc_addr_dict)
+    print('LOCATION_ID = ' + str(loc_id_dict))
+    print('LOCATION_ID_ADDR = ' + str(loc_id_addr_dict))
+    print('LOCATION_NAME = ' + str(loc_name_dict))
+    print('LOCATION_ADDR = ' + str(loc_addr_dict))
 
 
 if __name__ == '__main__':

@@ -3,10 +3,6 @@
 **Please note that the same location may have different id number for different services.**
 **For example, the id of Lodi is 198 in INITIAL PERMIT, but 136 for REAL ID.**
 
-**MVC now has NON-CDL KNOWLEDGE TESTING (First Appointments Starting 12/6/2021) and KNOWLEDGE TESTING 
-(Appointments available through 12/4/2021). I guess they are the same thing and the only difference 
-is the date, but please contact MVC for clarification.**
-
 I recommend to input id to the bot directly. If you want to use the location name, please note that 
 the bot is case-sensitive, which means `North Plainfield` is accepted but `north Plainfield` is not.
 
@@ -18,8 +14,8 @@ the bot is case-sensitive, which means `North Plainfield` is accepted but `north
 ## Catalog
 1. [INITIAL PERMIT (NOT FOR KNOWLEDGE TEST)](#initial-permit-not-for-knowledge-test)
 1. [NON-DRIVER ID](#non-driver-id)  
-1. [NON-CDL KNOWLEDGE TESTING](#non-cdl-knowledge-testing)
-1. [CDL KNOWLEDGE TESTING](#cdl-knowledge-testing)
+1. [KNOWLEDGE TEST (NOT CDL)](#knowledge-test-not-cdl)
+1. [CDL KNOWLEDGE TEST](#cdl-knowledge-test)
 1. [RENEWAL: LICENSE OR NON-DRIVER ID](#renewal-license-or-non-driver-id)
 1. [REAL ID - (NON-RENEWAL)](#real-id---non-renewal)
 1. [CDL PERMIT OR ENDORSEMENT - (NOT FOR KNOWLEDGE TEST)](#cdl-permit-or-endorsement---not-for-knowledge-test)
@@ -28,7 +24,6 @@ the bot is case-sensitive, which means `North Plainfield` is accepted but `north
 1. [NEW TITLE OR REGISTRATION](#new-title-or-registration)
 1. [REGISTRATION RENEWAL](#registration-renewal)
 1. [REPLACEMENT TITLE/ REGISTRATION](#replacement-title-registration)
-1. [KNOWLEDGE TESTING](#knowledge-testing)
 1. NON-CDL KNOWLEDGE TEST - ROWAN COLLEGE (NOT SUPPORTED)
 1. NON-CDL KNOWLEDGE TEST - WANAQUE (NOT SUPPORTED)
 
@@ -90,7 +85,7 @@ the bot is case-sensitive, which means `North Plainfield` is accepted but `north
 |[West Deptford](https://telegov.njportal.com/njmvc/AppointmentWizard/16/228)|228|215 Crown Point Road, Thorofare, NJ, 08086|
 
 
-## [NON-CDL KNOWLEDGE TESTING](https://telegov.njportal.com/njmvc/AppointmentWizard/19/)
+## [KNOWLEDGE TEST (NOT CDL)](https://telegov.njportal.com/njmvc/AppointmentWizard/19/)
 | Name | Id | Address |
 | :---: | :---: | :---: |
 |[Bakers Basin](https://telegov.njportal.com/njmvc/AppointmentWizard/19/267)|267|3200 Brunswick Pike, Lawrenceville, NJ, 08648|
@@ -119,7 +114,7 @@ the bot is case-sensitive, which means `North Plainfield` is accepted but `north
 |[West Deptford](https://telegov.njportal.com/njmvc/AppointmentWizard/19/286)|286|215 Crown Point Road, Thorofare, NJ, 08086|
 
 
-## [CDL KNOWLEDGE TESTING](https://telegov.njportal.com/njmvc/AppointmentWizard/20/)
+## [CDL KNOWLEDGE TEST](https://telegov.njportal.com/njmvc/AppointmentWizard/20/)
 | Name | Id | Address |
 | :---: | :---: | :---: |
 |[Bakers Basin](https://telegov.njportal.com/njmvc/AppointmentWizard/20/291)|291|3200 Brunswick Pike, Lawrenceville, NJ, 08648|
@@ -357,32 +352,3 @@ the bot is case-sensitive, which means `North Plainfield` is accepted but `north
 |[Turnersville](https://telegov.njportal.com/njmvc/AppointmentWizard/13/160)|160|5200 Route 42 North, Ganttown Plaza, Suite 13, Turnersville, NJ, 08012|
 |[Wallington](https://telegov.njportal.com/njmvc/AppointmentWizard/13/161)|161|450 Main Avenue, Wallington Square, Wallington, NJ, 07057|
 |[Washington](https://telegov.njportal.com/njmvc/AppointmentWizard/13/162)|162|404 E Washington Ave, Washington, NJ, 07882|
-
-
-## [KNOWLEDGE TESTING](https://telegov.njportal.com/njmvc/AppointmentWizard/17/)
-| Name | Id | Address |
-| :---: | :---: | :---: |
-|[Bakers Basin](https://telegov.njportal.com/njmvc/AppointmentWizard/17/232)|232|3200 Brunswick Pike, Lawrenceville, NJ, 08648|
-|[Bayonne](https://telegov.njportal.com/njmvc/AppointmentWizard/17/233)|233|RT 440 & 1347 Kennedy Blvd. , Family Dollar Plaza, Bayonne, NJ, 07002|
-|[Camden](https://telegov.njportal.com/njmvc/AppointmentWizard/17/235)|235|2600 Mt. Ephraim Avenue, Camden, NJ, 08104|
-|[Cardiff](https://telegov.njportal.com/njmvc/AppointmentWizard/17/254)|254|6725 Black Horse Pike, Harbor Square, Egg Harbor Twp, NJ, 08234-3935|
-|[Delanco](https://telegov.njportal.com/njmvc/AppointmentWizard/17/237)|237|400 Creek Road, Delanco, NJ, 08075|
-|[Eatontown](https://telegov.njportal.com/njmvc/AppointmentWizard/17/238)|238|109 Rt. 36, Eatontown, NJ, 07724|
-|[Edison](https://telegov.njportal.com/njmvc/AppointmentWizard/17/240)|240|45 Kilmer Road, Edison, NJ, 08817|
-|[Elizabeth](https://telegov.njportal.com/njmvc/AppointmentWizard/17/266)|266|17 Caldwell Place, Elizabeth, NJ, 07201|
-|[Flemington](https://telegov.njportal.com/njmvc/AppointmentWizard/17/241)|241|181 Routes 31 & 202 B, Flemington, NJ, 08551|
-|[Freehold](https://telegov.njportal.com/njmvc/AppointmentWizard/17/243)|243|811 Okerson Road, Freehold, NJ, 07728|
-|[Lodi](https://telegov.njportal.com/njmvc/AppointmentWizard/17/244)|244|8 Mill Street, Lodi, NJ, 07644|
-|[Newark](https://telegov.njportal.com/njmvc/AppointmentWizard/17/246)|246|228 Frelinghuysen Avenue, Newark, NJ, 07114|
-|[North Bergen](https://telegov.njportal.com/njmvc/AppointmentWizard/17/247)|247|8901 Park Plaza, 90th & Bergenline Avenue, North Bergen, NJ, 07047|
-|[Oakland](https://telegov.njportal.com/njmvc/AppointmentWizard/17/249)|249|350 Ramapo Valley Road, Suite 24, Oakland, NJ, 07436|
-|[Paterson](https://telegov.njportal.com/njmvc/AppointmentWizard/17/250)|250|125 Broadway, Suite 201, Paterson, NJ, 07505|
-|[Rahway](https://telegov.njportal.com/njmvc/AppointmentWizard/17/252)|252|1140 Woodbridge Road, Rahway, NJ, 07065|
-|[Randolph](https://telegov.njportal.com/njmvc/AppointmentWizard/17/253)|253|160 Canfield Avenue, Randolph, NJ, 07869|
-|[Rio Grande](https://telegov.njportal.com/njmvc/AppointmentWizard/17/234)|234|3305 Bay Shore Road, Breakwater Shopping Plaza, North Cape May, NJ, 08204|
-|[Salem](https://telegov.njportal.com/njmvc/AppointmentWizard/17/236)|236|199 East Broadway, Finlaw Building, Salem, NJ, 08079|
-|[South Plainfield](https://telegov.njportal.com/njmvc/AppointmentWizard/17/239)|239|5000 Hadley Road, South Plainfield, NJ, 07080|
-|[Toms River](https://telegov.njportal.com/njmvc/AppointmentWizard/17/242)|242|1861 Hooper Avenue, Village Square Plaza, Toms River, NJ, 08753|
-|[Vineland](https://telegov.njportal.com/njmvc/AppointmentWizard/17/245)|245|9 West Park Avenue, Vineland, NJ, 08360|
-|[Wayne](https://telegov.njportal.com/njmvc/AppointmentWizard/17/248)|248|481 Route 46 West, Wayne, NJ, 07470|
-|[West Deptford](https://telegov.njportal.com/njmvc/AppointmentWizard/17/251)|251|215 Crown Point Road, Thorofare, NJ, 08086|

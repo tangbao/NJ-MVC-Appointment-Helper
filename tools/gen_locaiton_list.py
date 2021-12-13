@@ -1,7 +1,7 @@
 import os
 
 os.chdir('../')
-from utils.const import *
+from const import *
 
 LOCATION_ADDR = {'15': {'186': '3200 Brunswick Pike, Lawrenceville, NJ, 08648',
                         '187': 'RT 440 & 1347 Kennedy Blvd. , Family Dollar Plaza, Bayonne, NJ, 07002',
@@ -231,27 +231,7 @@ LOCATION_ADDR = {'15': {'186': '3200 Brunswick Pike, Lawrenceville, NJ, 08648',
                         '159': '120 South Stockton Street, Trenton, NJ, 08666',
                         '160': '5200 Route 42 North, Ganttown Plaza, Suite 13, Turnersville, NJ, 08012',
                         '161': '450 Main Avenue, Wallington Square, Wallington, NJ, 07057',
-                        '162': '404 E Washington Ave, Washington, NJ, 07882'},
-                 '17': {'232': '3200 Brunswick Pike, Lawrenceville, NJ, 08648',
-                        '233': 'RT 440 & 1347 Kennedy Blvd. , Family Dollar Plaza, Bayonne, NJ, 07002',
-                        '235': '2600 Mt. Ephraim Avenue, Camden, NJ, 08104',
-                        '254': '6725 Black Horse Pike, Harbor Square, Egg Harbor Twp, NJ, 08234-3935',
-                        '237': '400 Creek Road, Delanco, NJ, 08075', '238': '109 Rt. 36, Eatontown, NJ, 07724',
-                        '240': '45 Kilmer Road, Edison, NJ, 08817', '266': '17 Caldwell Place, Elizabeth, NJ, 07201',
-                        '241': '181 Routes 31 & 202 B, Flemington, NJ, 08551',
-                        '243': '811 Okerson Road, Freehold, NJ, 07728', '244': '8 Mill Street, Lodi, NJ, 07644',
-                        '246': '228 Frelinghuysen Avenue, Newark, NJ, 07114',
-                        '247': '8901 Park Plaza, 90th & Bergenline Avenue, North Bergen, NJ, 07047',
-                        '249': '350 Ramapo Valley Road, Suite 24, Oakland, NJ, 07436',
-                        '250': '125 Broadway, Suite 201, Paterson, NJ, 07505',
-                        '252': '1140 Woodbridge Road, Rahway, NJ, 07065',
-                        '253': '160 Canfield Avenue, Randolph, NJ, 07869',
-                        '234': '3305 Bay Shore Road, Breakwater Shopping Plaza, North Cape May, NJ, 08204',
-                        '236': '199 East Broadway, Finlaw Building, Salem, NJ, 08079',
-                        '239': '5000 Hadley Road, South Plainfield, NJ, 07080',
-                        '242': '1861 Hooper Avenue, Village Square Plaza, Toms River, NJ, 08753',
-                        '245': '9 West Park Avenue, Vineland, NJ, 08360', '248': '481 Route 46 West, Wayne, NJ, 07470',
-                        '251': '215 Crown Point Road, Thorofare, NJ, 08086'}}
+                        '162': '404 E Washington Ave, Washington, NJ, 07882'}}
 
 
 if __name__ == '__main__':

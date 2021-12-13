@@ -6,8 +6,8 @@ SERVICE_ID = {
     # License Center
     'INITIAL PERMIT (NOT FOR KNOWLEDGE TEST)': '15',
     'NON-DRIVER ID': '16',
-    'NON-CDL KNOWLEDGE TESTING': '19',
-    'CDL KNOWLEDGE TESTING': '20',
+    'KNOWLEDGE TEST (NOT CDL)': '19',
+    'CDL KNOWLEDGE TEST': '20',
     'RENEWAL: LICENSE OR NON-DRIVER ID': '11',
     'REAL ID - (NON-RENEWAL)': '12',
     'CDL PERMIT OR ENDORSEMENT - (NOT FOR KNOWLEDGE TEST)': '14',
@@ -17,18 +17,18 @@ SERVICE_ID = {
     'NEW TITLE OR REGISTRATION': '8',
     'REGISTRATION RENEWAL': '10',
     'REPLACEMENT TITLE/ REGISTRATION': '13',
-    # Other
-    'KNOWLEDGE TESTING': '17',
+    # Other (not supported)
     # 'NON-CDL KNOWLEDGE TEST - ROWAN COLLEGE': '18',
     # 'NON-CDL KNOWLEDGE TEST - WANAQUE': '72'
 }
 
 SERVICE_KEYBOARD = [
-    ['INITIAL PERMIT (NOT FOR KNOWLEDGE TEST)', 'NON-DRIVER ID', 'NON-CDL KNOWLEDGE TESTING'],
-    ['CDL KNOWLEDGE TESTING', 'RENEWAL: LICENSE OR NON-DRIVER ID', 'REAL ID - (NON-RENEWAL)'],
-    ['CDL PERMIT OR ENDORSEMENT - (NOT FOR KNOWLEDGE TEST)', 'RENEWAL: CDL'],
-    ['TRANSFER FROM OUT OF STATE', 'NEW TITLE OR REGISTRATION', 'REGISTRATION RENEWAL'],
-    ['REPLACEMENT TITLE/ REGISTRATION', 'KNOWLEDGE TESTING']
+    ['INITIAL PERMIT (NOT FOR KNOWLEDGE TEST)', 'NON-DRIVER ID'],
+    ['KNOWLEDGE TEST (NOT CDL)', 'CDL KNOWLEDGE TEST'],
+    ['RENEWAL: LICENSE OR NON-DRIVER ID', 'REAL ID - (NON-RENEWAL)'],
+    ['CDL PERMIT OR ENDORSEMENT - (NOT FOR KNOWLEDGE TEST)'],
+    ['RENEWAL: CDL', 'TRANSFER FROM OUT OF STATE', 'NEW TITLE OR REGISTRATION'],
+    ['REGISTRATION RENEWAL', 'REPLACEMENT TITLE/ REGISTRATION']
 ]
 
 LOCATION_ID = {'186': 'Bakers Basin', '187': 'Bayonne', '189': 'Camden', '208': 'Cardiff', '191': 'Delanco',
@@ -85,12 +85,7 @@ LOCATION_ID = {'186': 'Bakers Basin', '187': 'Bayonne', '189': 'Camden', '208': 
                '148': 'East Orange', '149': 'Hazlet', '150': 'Jersey City', '151': 'Lakewood', '152': 'Manahawkin',
                '153': 'Medford', '154': 'Newton', '255': 'Rio Grande', '155': 'Runnemede', '156': 'Somerville',
                '157': 'South Brunswick', '158': 'Springfield', '159': 'Trenton Regional', '160': 'Turnersville',
-               '161': 'Wallington', '162': 'Washington', '232': 'Bakers Basin', '233': 'Bayonne', '235': 'Camden',
-               '254': 'Cardiff', '237': 'Delanco', '238': 'Eatontown', '240': 'Edison', '266': 'Elizabeth',
-               '241': 'Flemington', '243': 'Freehold', '244': 'Lodi', '246': 'Newark', '247': 'North Bergen',
-               '249': 'Oakland', '250': 'Paterson', '252': 'Rahway', '253': 'Randolph', '234': 'Rio Grande',
-               '236': 'Salem', '239': 'South Plainfield', '242': 'Toms River', '245': 'Vineland', '248': 'Wayne',
-               '251': 'West Deptford', '0': 'All'}
+               '161': 'Wallington', '162': 'Washington', '0': 'All'}
 
 LOCATION_ID_ADDR = {'186': '3200 Brunswick Pike, Lawrenceville, NJ, 08648',
                     '187': 'RT 440 & 1347 Kennedy Blvd. , Family Dollar Plaza, Bayonne, NJ, 07002',
@@ -308,26 +303,7 @@ LOCATION_ID_ADDR = {'186': '3200 Brunswick Pike, Lawrenceville, NJ, 08648',
                     '159': '120 South Stockton Street, Trenton, NJ, 08666',
                     '160': '5200 Route 42 North, Ganttown Plaza, Suite 13, Turnersville, NJ, 08012',
                     '161': '450 Main Avenue, Wallington Square, Wallington, NJ, 07057',
-                    '162': '404 E Washington Ave, Washington, NJ, 07882',
-                    '232': '3200 Brunswick Pike, Lawrenceville, NJ, 08648',
-                    '233': 'RT 440 & 1347 Kennedy Blvd. , Family Dollar Plaza, Bayonne, NJ, 07002',
-                    '235': '2600 Mt. Ephraim Avenue, Camden, NJ, 08104',
-                    '254': '6725 Black Horse Pike, Harbor Square, Egg Harbor Twp, NJ, 08234-3935',
-                    '237': '400 Creek Road, Delanco, NJ, 08075', '238': '109 Rt. 36, Eatontown, NJ, 07724',
-                    '240': '45 Kilmer Road, Edison, NJ, 08817', '266': '17 Caldwell Place, Elizabeth, NJ, 07201',
-                    '241': '181 Routes 31 & 202 B, Flemington, NJ, 08551',
-                    '243': '811 Okerson Road, Freehold, NJ, 07728', '244': '8 Mill Street, Lodi, NJ, 07644',
-                    '246': '228 Frelinghuysen Avenue, Newark, NJ, 07114',
-                    '247': '8901 Park Plaza, 90th & Bergenline Avenue, North Bergen, NJ, 07047',
-                    '249': '350 Ramapo Valley Road, Suite 24, Oakland, NJ, 07436',
-                    '250': '125 Broadway, Suite 201, Paterson, NJ, 07505',
-                    '252': '1140 Woodbridge Road, Rahway, NJ, 07065', '253': '160 Canfield Avenue, Randolph, NJ, 07869',
-                    '234': '3305 Bay Shore Road, Breakwater Shopping Plaza, North Cape May, NJ, 08204',
-                    '236': '199 East Broadway, Finlaw Building, Salem, NJ, 08079',
-                    '239': '5000 Hadley Road, South Plainfield, NJ, 07080',
-                    '242': '1861 Hooper Avenue, Village Square Plaza, Toms River, NJ, 08753',
-                    '245': '9 West Park Avenue, Vineland, NJ, 08360', '248': '481 Route 46 West, Wayne, NJ, 07470',
-                    '251': '215 Crown Point Road, Thorofare, NJ, 08086'}
+                    '162': '404 E Washington Ave, Washington, NJ, 07882'}
 
 LOCATION_NAME = {'15': {'186': 'Bakers Basin', '187': 'Bayonne', '189': 'Camden', '208': 'Cardiff', '191': 'Delanco',
                         '192': 'Eatontown', '194': 'Edison', '264': 'Elizabeth', '195': 'Flemington', '197': 'Freehold',
@@ -392,13 +368,7 @@ LOCATION_NAME = {'15': {'186': 'Bakers Basin', '187': 'Bayonne', '189': 'Camden'
                  '13': {'147': 'Cherry Hill', '148': 'East Orange', '149': 'Hazlet', '150': 'Jersey City',
                         '151': 'Lakewood', '152': 'Manahawkin', '153': 'Medford', '154': 'Newton', '255': 'Rio Grande',
                         '155': 'Runnemede', '156': 'Somerville', '157': 'South Brunswick', '158': 'Springfield',
-                        '159': 'Trenton Regional', '160': 'Turnersville', '161': 'Wallington', '162': 'Washington'},
-                 '17': {'232': 'Bakers Basin', '233': 'Bayonne', '235': 'Camden', '254': 'Cardiff', '237': 'Delanco',
-                        '238': 'Eatontown', '240': 'Edison', '266': 'Elizabeth', '241': 'Flemington', '243': 'Freehold',
-                        '244': 'Lodi', '246': 'Newark', '247': 'North Bergen', '249': 'Oakland', '250': 'Paterson',
-                        '252': 'Rahway', '253': 'Randolph', '234': 'Rio Grande', '236': 'Salem',
-                        '239': 'South Plainfield', '242': 'Toms River', '245': 'Vineland', '248': 'Wayne',
-                        '251': 'West Deptford'}}
+                        '159': 'Trenton Regional', '160': 'Turnersville', '161': 'Wallington', '162': 'Washington'}}
 
 CHECK_MSG = 'Send /cancel to stop at any time.\n\n' + \
             'What service do you want to make an appointment?\n'
@@ -439,7 +409,3 @@ TEST_NEED_MSG = 'If you want to be one of the authorized users of this bot that 
                 '****************\n' \
                 'You don\'t have to be a programmer, but just a normal user who can report bugs to me.\n' \
                 '****************'
-
-KT_MSG = 'MVC now has NON-CDL KNOWLEDGE TESTING (First Appointments Starting 12/6/2021) and KNOWLEDGE TESTING ' \
-         '(Appointments available through 12/4/2021). I guess they are the same thing and the only difference ' \
-         'is the date, but please contact MVC for clarification.'

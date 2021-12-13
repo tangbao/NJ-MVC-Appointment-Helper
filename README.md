@@ -13,14 +13,10 @@ Stay safe.
 
 **Please always update to the newest version before reporting any bugs.**
 
-**MVC now has NON-CDL KNOWLEDGE TESTING (First Appointments Starting 12/6/2021) and KNOWLEDGE TESTING 
-(Appointments available through 12/4/2021). I guess they are the same thing and the only difference 
-is the date, but please contact MVC for clarification.**
+To receive updates in real time, you can subscribe to Telegram channel [@njmvc_bot_notif](https://t.me/njmvc_bot_notif).
 
 For now, I am working on the persistence of the bot - make everything, including the job queue of the bot persistent 
 after restarting the bot. So please remember to go back and check for updates.
-
-You are welcome to contact me to be an authorized user.
 
 ## Demo
 
@@ -29,9 +25,7 @@ You are welcome to contact me to be an authorized user.
 Note that you can only use `/check` function of this demo bot. Only authorized users can use `/subscribe`. I do not make
 it fully public because I cannot afford too much cloud resources.
 
-[@njmvc_bot_notif](https://t.me/njmvc_bot_notif)
-
-Receive the updates of this bot and this project.
+You are welcome to contact me to be an authorized user, but there is no warranty to use this bot.
 
 ### **Privacy Disclaimer**
 
