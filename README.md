@@ -88,6 +88,8 @@ An example of a running subscription
 
 ### Configuration & Deployment
 
+**This part is out-of-date.**
+
 > In the current version, the bot is not persistent. It means that everything will lose after you restart the bot. You 
 > have to create the subscriptions again.
 
