@@ -4,10 +4,11 @@ An UNOFFICIAL Telegram bot that helps you find the most recent available appoint
 
 If it could help you, please give me a star. Appreciated.
 
-I really hope this COVID-19 pandemic can end soon so that everything can go back to normal. Hope this bot can help you 
-a little.
+Update 2022 Oct 25: It seems that everything is on the way back to normal (hopefully). I do not know why you cannot find
+this project repo page in Google search results, which is annoying because it prevents people from getting access to this 
+project. Does anyone have idea about it?
 
-Stay safe.
+Stay safe. Stay health.
 
 ## Recent Updates
 
@@ -15,8 +16,9 @@ Stay safe.
 
 To receive updates in real time, you can subscribe to Telegram channel [@njmvc_bot_notif](https://t.me/njmvc_bot_notif).
 
-For now, I am working on the persistence of the bot - make everything, including the job queue of the bot persistent 
-after restarting the bot. So please remember to go back and check for updates.
+Update 2022 Oct 25: I am updating the python-telegram-bot to v20.x, which is not compatible with the old version. For 
+the last version of the bot using PTB v13.x, please visit 
+https://github.com/tangbao/NJ-MVC-Appointment-Helper/releases/tag/v0.1.
 
 ## Demo
 

@@ -3,7 +3,7 @@
 # Please set bot token, admins, and authorized users in config.secret.yaml.
 
 # If true, the bot will be switched to a test bot. You have to set test token in config.secret.yaml as well if true.
-test mode: false
+test mode: true
 # If true, only authorized users can use /subscribe function.
 require auth: true
 

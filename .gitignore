@@ -1,5 +1,5 @@
-*.secret
+.idea
+__pycache__
 
 *.dat
-
 config.secret.yaml
