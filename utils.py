@@ -8,15 +8,7 @@ import yaml
 from const import *
 
 
-def load_config(logger=None):
-    with open("config.yaml", 'r') as stream:
-        try:
-            config = yaml.safe_load(stream)
-        except yaml.YAMLError as exc:
-            if logger is not None:
-                logger.error(exc)
-            exit(1)
-
+def load_secret(logger=None):
     with open("config.secret.yaml", 'r') as stream:
         try:
             secret = yaml.safe_load(stream)
@@ -26,9 +18,19 @@ def load_config(logger=None):
             if logger is not None:
                 logger.error(exc)
             exit(1)
+    return secret
 
-    config.update(secret)
-    return config
+
+def load_auth_users(logger=None):
+    with open("config.secret.yaml", 'r') as stream:
+        try:
+            secret = yaml.safe_load(stream)
+            secret['authorized users'] = [str(x) for x in secret['authorized users']]
+        except yaml.YAMLError as exc:
+            if logger is not None:
+                logger.error(exc)
+            exit(1)
+    return secret['authorized users']
 
 
 def is_dst(dt=None, timezone="UTC"):

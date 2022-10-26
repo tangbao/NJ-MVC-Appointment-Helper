@@ -45,12 +45,26 @@ CANCEL_JOB = 0
 
 
 class NJMVCBot:
-    def __init__(self):
-        logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-                            level=logging.INFO)
-        self.logger = logging.getLogger(__name__)
-        self.config = load_config(self.logger)
+    def __init__(self, args):
+        self.args = args
+        self.logger = self.init_logging()
+        self.config = self.init_config()
         self.init_bot()
+
+    def init_logging(self):
+        logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+                            level=logging.INFO,
+                            filename=self.args.log_file)
+        return logging.getLogger(__name__)
+
+    def init_config(self):
+        config = load_secret(self.logger)
+        config['test mode'] = self.args.test
+        config['require auth'] = self.args.auth
+        config['job limit'] = self.args.joblimit
+        config['timeout'] = self.args.timeout
+        config['query interval'] = self.args.qintvl
+        return config
 
     def init_bot(self):
         if self.config['test mode']:
@@ -94,7 +108,7 @@ class NJMVCBot:
         application.add_handler(CommandHandler('start', self.start))
         application.add_handler(CommandHandler('help', self.help))
         application.add_handler(CommandHandler('cancel', self.global_cancel))
-        application.add_handler(CommandHandler('updateconfig', self.update_config))
+        application.add_handler(CommandHandler('updateauthuser', self.update_auth_users))
 
         application.add_handler(MessageHandler(filters.TEXT & (~filters.COMMAND), self.usr_msg))
         application.add_handler(MessageHandler(filters.COMMAND, self.unknown))
@@ -144,7 +158,7 @@ class NJMVCBot:
 
         service_time_url = MVC_URL + SERVICE_ID[update.message.text]
         await update.message.reply_text('You are querying the available locations for ' + update.message.text + '.\n' +
-                                        'You can visit ' + service_time_url + ' directly for all available locations.\n' +
+                                        'You can visit ' + service_time_url + ' directly for all available locations.\n'
                                         'It may take some time to get the results because NJ MVC website is unstable.',
                                         reply_markup=ReplyKeyboardRemove())
         try:
@@ -177,7 +191,7 @@ class NJMVCBot:
         await update.message.reply_text('Blah blah blah. I don\'t understand what you\'re talking about.')
 
     async def unknown(self, update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-        context.bot.send_message(chat_id=update.effective_chat.id, text="Sorry, the command does not support.")
+        await context.bot.send_message(chat_id=update.effective_chat.id, text="Sorry, the command does not support.")
 
     def get_usr_jobs(self, context, uid):
         jobs = context.job_queue.jobs()
@@ -270,11 +284,11 @@ class NJMVCBot:
             context.user_data['TIME'] = time
             await update.message.reply_text('You are subscribing to ' + context.user_data.get('SERVICE', 'NOT FOUND') +
                                             ' at ' + LOCATION_ID[context.user_data.get('LOCATION_ID')] +
-                                            ' on or before ' + context.user_data.get('TIME',
-                                                                                     '331231') + ' (yymmdd).\n\n'
-                                                                                                 'Reply /confirm to start the subscription. The bot will query available '
-                                                                                                 'appointments every ' + str(
-                self.config['query interval']) + ' seconds, and send you a '
+                                            ' on or before ' + context.user_data.get('TIME', '331231') +
+                                            ' (yymmdd).\n\n'
+                                            'Reply /confirm to start the subscription. The bot will query available '
+                                            'appointments every ' + str(self.config['query interval']) +
+                                            ' seconds, and send you a '
                                             'notification when one is available.\n\n'
                                             'Reply /cancel to start a new subscribe if there\'s anything wrong.',
                                             reply_markup=ReplyKeyboardMarkup(
@@ -287,11 +301,12 @@ class NJMVCBot:
         job = context.job
         detail = job.data
         if is_expired_date(detail['TIME']):
-            context.bot.send_message(chat_id=detail['CHAT_ID'],
-                                     text='You subscription ' + detail[
-                                         'NAME'] + ' has expired. Please start a new one.\n\n'
-                                                   'If you received no messages from the bot, it could because there was no available'
-                                                   'places found by the bot.')
+            await context.bot.send_message(chat_id=detail['CHAT_ID'],
+                                           text='You subscription ' + detail['NAME'] +
+                                                ' has expired. Please start a new one.\n\n'
+                                                'If you received no messages from the bot, '
+                                                'it could because there was no available'
+                                                'places found by the bot.')
             job.schedule_removal()
         try:
             response = requests.get(detail['SERVICE_URL'], timeout=self.config['timeout'])
@@ -381,28 +396,22 @@ class NJMVCBot:
             await update.message.reply_text(job.name + ' canceled!', reply_markup=ReplyKeyboardRemove())
         return ConversationHandler.END
 
-    async def update_config(self, update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    async def update_auth_users(self, update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         user = update.message.from_user
         self.logger.info("User %s starts to update authorized user list.", user.full_name)
 
         if str(user.id) != self.config['admin']:
             await update.message.reply_text('You do not have the admin privilege to do so.')
         else:
-            globals()['config'] = load_config(self.logger)
-            await update.message.reply_text('Configs updated successfully!')
+            self.config['authorized users'] = load_auth_users(self.logger)
+            await update.message.reply_text('Authorized users updated successfully!')
 
     async def error_handler(self, update: object, context: ContextTypes.DEFAULT_TYPE) -> None:
-        """Log the error and send a telegram message to notify the developer."""
-        # Log the error before we do anything else, so we can see it even if something breaks.
         self.logger.error(msg="Exception while handling an update:", exc_info=context.error)
 
-        # traceback.format_exception returns the usual python message about an exception, but as a
-        # list of strings rather than a single string, so we have to join them together.
         tb_list = traceback.format_exception(None, context.error, context.error.__traceback__)
         tb_string = "".join(tb_list)
 
-        # Build the message with some markup and additional information about what happened.
-        # You might need to add some logic to deal with messages longer than the 4096 character limit.
         update_str = update.to_dict() if isinstance(update, Update) else str(update)
         message = (
             f"An exception was raised while handling an update\n"
@@ -413,7 +422,6 @@ class NJMVCBot:
             f"<pre>{html.escape(tb_string)}</pre>"
         )
 
-        # Finally, send the message
         await context.bot.send_message(
-            chat_id=self.config['admin'], text=message, parse_mode=ParseMode.HTML
+            chat_id=self.config['admin'], text=message[:4096], parse_mode=ParseMode.HTML
         )

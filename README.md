@@ -1,6 +1,6 @@
 # NJ MVC Appointment Helper
 
-An UNOFFICIAL Telegram bot that helps you find the most recent available appointment place for you.
+A third-party Telegram bot that helps you find the most recent available appointment place for you.
 
 If it could help you, please give me a star. Appreciated.
 
