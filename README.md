@@ -4,11 +4,11 @@ A third-party Telegram bot that helps you find the most recent available appoint
 
 If it could help you, please give me a star. Appreciated.
 
+Stay safe. Stay health.
+
 Update 2022 Oct 25: It seems that everything is on the way back to normal (hopefully). I do not know why you cannot find
 this project repo page in Google search results, which is annoying because it prevents people from getting access to this 
 project. Does anyone have idea about it?
-
-Stay safe. Stay health.
 
 ## Recent Updates
 
@@ -33,12 +33,13 @@ You are welcome to contact me to be an authorized user, but there is no warranty
 
 The logger of the bot may record your Telegram username and all the messages you send to the bot. Your Telegram user 
 id will be used to verify if you are an authorized user or not. All the data collected by the bot will only be used for 
-debug and will not be used for any analytics or shared/sold to a third party.
+debug and will not be used for any analytics or shared/sold to a third party. The data collected will be stored on the 
+server for at most 7 days.
 
 If you do not agree with this privacy policy, please do not use the bot, and consider 
 [building your own bot](#build-your-own).
 
-Privacy disclaimer updated 2021 Jul 28.
+Privacy disclaimer updated 2022 Nov 12.
 
 ## Usage
 
@@ -88,7 +89,7 @@ An example of a running subscription
 
 ### Configuration & Deployment
 
-**This part is out-of-date.**
+**This part does not work for the current version. Please check v0.1 tag for a working old version.**
 
 > In the current version, the bot is not persistent. It means that everything will lose after you restart the bot. You 
 > have to create the subscriptions again.

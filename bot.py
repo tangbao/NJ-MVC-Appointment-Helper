@@ -1,5 +1,7 @@
 import logging
+from logging.handlers import TimedRotatingFileHandler
 import html
+import os.path
 import traceback
 
 import requests
@@ -52,9 +54,14 @@ class NJMVCBot:
         self.init_bot()
 
     def init_logging(self):
+        if not os.path.exists('./log'):
+            os.makedirs('./log')
+        logHandler = TimedRotatingFileHandler('./log/njmvcbot.log', when='D', interval=1, backupCount=7)
+        logHandler.suffix = "%Y-%m-%d.log"
+
         logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                             level=logging.INFO,
-                            filename=self.args.log_file)
+                            handlers=[logHandler])
         return logging.getLogger(__name__)
 
     def init_config(self):
